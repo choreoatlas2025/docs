@@ -12,7 +12,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://choreoatlas.io',
+  url: 'https://choreoatlas2025.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -31,24 +31,8 @@ const config = {
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'zh-Hans',
-    locales: ['zh-Hans', 'en'],
-    localeConfigs: {
-      'zh-Hans': {
-        label: '中文',
-        direction: 'ltr',
-        htmlLang: 'zh-CN',
-        calendar: 'gregory',
-        path: 'zh-Hans',
-      },
-      en: {
-        label: 'English',
-        direction: 'ltr',
-        htmlLang: 'en-US',
-        calendar: 'gregory',
-        path: 'en',
-      },
-    },
+    defaultLocale: 'en',
+    locales: ['en'],
   },
 
   presets: [
@@ -67,16 +51,11 @@ const config = {
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
-            xslt: true,
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/choreoatlas2025/docs/tree/main/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -128,15 +107,15 @@ const config = {
             items: [
               {
                 label: 'Quick Start',
-                to: '/docs/intro',
+                to: '/docs/',
               },
               {
-                label: 'ServiceSpec Guide',
-                to: '/docs/servicespec',
+                label: 'Installation',
+                to: '/docs/installation',
               },
               {
-                label: 'FlowSpec Guide',
-                to: '/docs/flowspec',
+                label: 'Quick Guide',
+                to: '/docs/quickstart',
               },
             ],
           },

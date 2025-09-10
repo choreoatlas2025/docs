@@ -294,10 +294,7 @@ choreoatlas validate \
 
 现在您已经掌握了基本用法，继续深入学习：
 
-1. **[ServiceSpec 详解](./servicespec/overview)** - 学习编写精确的服务契约
-2. **[FlowSpec 详解](./flowspec/overview)** - 掌握复杂编排的建模
-3. **[报告分析](./reports/html-reports)** - 深度解读验证报告
-4. **[CI/CD 集成](./ci-cd/github-actions)** - 完整的自动化设置
+1. **[双契约架构详解](./concepts/dual-contracts)** - 深入理解 ServiceSpec + FlowSpec 设计模式
 
 ## ❓ 常见问题
 

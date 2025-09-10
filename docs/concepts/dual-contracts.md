@@ -342,9 +342,9 @@ flow:
 
 现在您已经理解了双契约架构的设计理念，继续学习：
 
-- **[ServiceSpec 详解](../servicespec/overview)** - 深入学习服务契约编写
-- **[FlowSpec 详解](../flowspec/overview)** - 掌握编排契约建模
-- **[CLI 命令](../cli/discover)** - 了解如何使用工具生成和验证契约
+- **[快速开始教程](../quickstart)** - 动手实践双契约验证流程
+- **[安装指南](../installation)** - 设置 ChoreoAtlas CLI 环境  
+- **[GitHub 项目](https://github.com/choreoatlas2025/cli)** - 查看完整的实现和示例
 
 ---
 

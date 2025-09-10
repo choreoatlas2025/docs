@@ -215,17 +215,15 @@ cosign verify choreoatlas/cli:latest --certificate-identity-regexp=".*" --certif
 
 如果遇到安装问题：
 
-1. 查看 [FAQ](./faq.md)
-2. 搜索 [GitHub Issues](https://github.com/choreoatlas2025/cli/issues)
-3. 访问 [GitHub Discussions](https://github.com/choreoatlas2025/cli/discussions)
-4. 联系技术支持: [support@choreoatlas.com](mailto:support@choreoatlas.com)
+1. 搜索 [GitHub Issues](https://github.com/choreoatlas2025/cli/issues)
+2. 访问 [GitHub Discussions](https://github.com/choreoatlas2025/cli/discussions)
+3. 联系技术支持: [support@choreoatlas.com](mailto:support@choreoatlas.com)
 
 ## 🚀 下一步
 
 安装完成后，继续：
 - [快速开始](./quickstart.md) - 运行您的第一个验证
 - [核心概念](./concepts/dual-contracts.md) - 了解双契约架构
-- [CLI 命令](./cli/discover.md) - 掌握命令行工具
 
 ---
 

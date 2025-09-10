@@ -188,11 +188,9 @@ flow:
 
 ## 🚀 下一步
 
-1. **[安装 CLI](./installation)** - 选择适合的安装方式
-2. **[快速开始](./quickstart)** - 15分钟完成第一个验证
-3. **[ServiceSpec 指南](./servicespec/overview)** - 学习服务契约编写
-4. **[FlowSpec 指南](./flowspec/overview)** - 掌握编排流程定义
-5. **[CI/CD 集成](./ci-cd/github-actions)** - 设置自动化门禁
+1. **[安装 CLI](/docs/installation)** - 选择适合的安装方式
+2. **[快速开始](/docs/quickstart)** - 15分钟完成第一个验证
+3. **[双契约架构](/docs/concepts/dual-contracts)** - 学习 ServiceSpec + FlowSpec 协作模式
 
 ---
 
