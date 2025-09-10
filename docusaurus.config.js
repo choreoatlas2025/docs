@@ -15,7 +15,7 @@ const config = {
   url: 'https://choreoatlas2025.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -41,6 +41,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/', // 设置docs为根路径，避免双重/docs/路径
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -111,11 +112,11 @@ const config = {
               },
               {
                 label: 'Installation',
-                to: '/docs/installation',
+                to: '/installation',
               },
               {
                 label: 'Quick Guide',
-                to: '/docs/quickstart',
+                to: '/quickstart',
               },
             ],
           },
