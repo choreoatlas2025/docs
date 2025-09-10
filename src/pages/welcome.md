@@ -2,4 +2,4 @@
 
 Welcome to the ChoreoAtlas CLI documentation site!
 
-[Get Started →](/docs/)
+[Get Started →](/)

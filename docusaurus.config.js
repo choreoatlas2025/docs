@@ -12,10 +12,10 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://choreoatlas2025.github.io',
+  url: 'https://choreoatlas.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/docs/',
+  // For custom domain, use root path
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -108,7 +108,7 @@ const config = {
             items: [
               {
                 label: 'Quick Start',
-                to: '/docs/',
+                to: '/',
               },
               {
                 label: 'Installation',
