@@ -9,7 +9,8 @@ on:
 env:
   GHCR_REGISTRY: ghcr.io
   DOCKER_REGISTRY: docker.io
-  IMAGE_NAME: choreoatlas2025/docs
+  IMAGE_NAME_GHCR: choreoatlas2025/docs
+  IMAGE_NAME_DOCKER: choreoatlas/docs
 
 jobs:
   build-and-push:
@@ -41,8 +42,8 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         images: |
-          ${{ env.GHCR_REGISTRY }}/${{ env.IMAGE_NAME }}
-          ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}
+          ${{ env.GHCR_REGISTRY }}/${{ env.IMAGE_NAME_GHCR }}
+          ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME_DOCKER }}
         tags: |
           type=ref,event=branch
           type=ref,event=pr
