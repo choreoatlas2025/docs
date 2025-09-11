@@ -1,0 +1,23 @@
+{
+  "Get Started - 5min ⏱️": {
+    "message": "始める - 5分 ⏱️"
+  },
+  "Service-level Semantic Verification": {
+    "message": "サービスレベルセマンティック検証"
+  },
+  "ServiceSpec contracts define preconditions and postconditions for each operation, enabling CEL-based semantic validation beyond simple schema checking.": {
+    "message": "ServiceSpec契約は各操作の前提条件と事後条件を定義し、単純なスキーマチェックを超えたCELベースのセマンティック検証を可能にします。"
+  },
+  "Orchestration-level Temporal Verification": {
+    "message": "オーケストレーションレベルテンポラル検証"
+  },
+  "FlowSpec contracts define step sequences and data flow, enabling temporal, causal, and DAG validation of service choreography.": {
+    "message": "FlowSpec契約はステップシーケンスとデータフローを定義し、サービスコレオグラフィのテンポラル、因果、DAG検証を可能にします。"
+  },
+  "Real Trace-driven Validation": {
+    "message": "リアルトレース駆動検証"
+  },
+  "Validate contracts against actual execution traces (JSON/OTLP), bridging the gap between design and runtime behavior.": {
+    "message": "実際の実行トレース（JSON/OTLP）に対して契約を検証し、設計とランタイム動作間のギャップを埋めます。"
+  }
+}

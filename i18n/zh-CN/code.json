@@ -1,0 +1,23 @@
+{
+  "Get Started - 5min ⏱️": {
+    "message": "快速开始 - 5分钟 ⏱️"
+  },
+  "Service-level Semantic Verification": {
+    "message": "服务级语义验证"
+  },
+  "ServiceSpec contracts define preconditions and postconditions for each operation, enabling CEL-based semantic validation beyond simple schema checking.": {
+    "message": "ServiceSpec 契约为每个操作定义前置条件和后置条件，实现基于 CEL 的语义验证，超越简单的模式检查。"
+  },
+  "Orchestration-level Temporal Verification": {
+    "message": "编排级时序验证"
+  },
+  "FlowSpec contracts define step sequences and data flow, enabling temporal, causal, and DAG validation of service choreography.": {
+    "message": "FlowSpec 契约定义步骤序列和数据流，实现服务编排的时序、因果和 DAG 验证。"
+  },
+  "Real Trace-driven Validation": {
+    "message": "真实追踪驱动验证"
+  },
+  "Validate contracts against actual execution traces (JSON/OTLP), bridging the gap between design and runtime behavior.": {
+    "message": "根据实际执行追踪（JSON/OTLP）验证契约，连接设计和运行时行为之间的gap。"
+  }
+}
