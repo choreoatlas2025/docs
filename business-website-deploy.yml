@@ -1,0 +1,87 @@
+# 商务网站GitHub Actions部署配置
+# 放置于: .github/workflows/deploy.yml (在choreoatlas-website仓库中)
+
+name: Deploy Business Website
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build website
+      run: npm run build
+      
+    - name: Create deployment package
+      run: |
+        tar -czf website-build.tar.gz out/
+        
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          # 停止nginx
+          sudo systemctl stop nginx
+          
+          # 备份当前网站
+          sudo mv /var/www/choreoatlas-website /var/www/choreoatlas-website.backup.$(date +%Y%m%d_%H%M%S) || true
+          
+          # 创建新目录
+          sudo mkdir -p /var/www/choreoatlas-website
+          sudo chown ubuntu:ubuntu /var/www/choreoatlas-website
+          
+    - name: Upload build files
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        source: "website-build.tar.gz"
+        target: "/home/ubuntu/"
+        
+    - name: Extract and configure
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          # 解压构建文件
+          cd /var/www/choreoatlas-website
+          tar -xzf /home/ubuntu/website-build.tar.gz
+          
+          # 设置权限
+          sudo chown -R www-data:www-data /var/www/choreoatlas-website
+          sudo chmod -R 755 /var/www/choreoatlas-website
+          
+          # 清理临时文件
+          rm -f /home/ubuntu/website-build.tar.gz
+          
+          # 重启nginx
+          sudo systemctl start nginx
+          sudo systemctl reload nginx
+          
+          # 验证部署
+          sleep 5
+          curl -I http://localhost || echo "部署验证失败"
+          
+          echo "✅ 商务网站部署完成！"
