@@ -63,7 +63,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/', // 设置docs为根路径，避免双重/docs/路径
+          routeBasePath: '/docs', // 修复：docs应该在/docs路径下
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
