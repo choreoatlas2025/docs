@@ -14,7 +14,7 @@ async function handleRequest(request) {
   const clientIP = request.headers.get('CF-Connecting-IP')
   
   // 定义目标服务器
-  const ORACLE_CLOUD = 'http://140.238.86.4:8080'
+  const ORACLE_CLOUD = 'http://144.21.49.157:80'
   const GITHUB_PAGES = 'https://choreoatlas2025.github.io'
   
   // 中国地区路由到 Oracle Cloud 服务器
