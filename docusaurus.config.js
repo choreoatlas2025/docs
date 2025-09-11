@@ -130,15 +130,15 @@ const config = {
             items: [
               {
                 label: 'Quick Start',
-                to: '/',
+                to: '/docs/',
               },
               {
                 label: 'Installation',
-                to: '/installation',
+                to: '/docs/installation',
               },
               {
                 label: 'Quick Guide',
-                to: '/quickstart',
+                to: '/docs/quickstart',
               },
             ],
           },

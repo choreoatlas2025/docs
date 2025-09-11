@@ -1,6 +1,5 @@
 ---
 sidebar_position: 1
-slug: /
 ---
 
 # 欢迎使用 ChoreoAtlas CLI
@@ -188,9 +187,9 @@ flow:
 
 ## 🚀 下一步
 
-1. **[安装 CLI](./installation)** - 选择适合的安装方式
-2. **[快速开始](./quickstart)** - 15分钟完成第一个验证
-3. **[双契约架构](./concepts/dual-contracts)** - 学习 ServiceSpec + FlowSpec 协作模式
+1. **[安装 CLI](installation)** - 选择适合的安装方式
+2. **[快速开始](quickstart)** - 15分钟完成第一个验证
+3. **[双契约架构](concepts/dual-contracts)** - 学习 ServiceSpec + FlowSpec 协作模式
 
 ---
 
