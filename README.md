@@ -140,3 +140,4 @@ Documentation content is licensed under [CC BY 4.0](https://creativecommons.org/
 
 **ChoreoAtlas CLI** - Map, Verify, Steer cross-service choreography with contracts-as-code.# Pages test
 # 测试部署
+# Test deployment trigger
