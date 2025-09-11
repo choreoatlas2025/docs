@@ -114,6 +114,7 @@ Available custom CSS classes:
 
 ## 🚀 Deployment
 
+### GitHub Pages (自动部署)
 Documentation is automatically deployed to GitHub Pages on push to `main` branch.
 
 Manual deployment:
@@ -121,6 +122,53 @@ Manual deployment:
 npm run build
 npm run deploy
 ```
+
+### Docker 部署 (推荐用于Oracle Cloud等内存受限服务器)
+
+由于Oracle Cloud等服务器内存限制，无法直接执行 `npm run build`，建议使用GitHub Actions构建的Docker镜像：
+
+```bash
+# 拉取最新镜像
+docker pull choreoatlas/docs:latest
+
+# 停止并删除旧容器
+docker stop choreoatlas-docs && docker rm choreoatlas-docs
+
+# 启动新容器
+docker run -d --name choreoatlas-docs -p 8080:80 choreoatlas/docs:latest
+
+# 检查容器状态
+docker ps | grep choreoatlas-docs
+```
+
+**Nginx配置示例**：
+```nginx
+server {
+    listen 80;
+    server_name choreoatlas.io;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name choreoatlas.io;
+    
+    # SSL配置...
+    
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+**部署流程**：
+1. GitHub Actions 自动构建 Docker 镜像
+2. 镜像推送到 Docker Hub: `choreoatlas/docs:latest`
+3. 服务器拉取并部署镜像，避免本地构建内存不足问题
 
 ## 📧 Contributing
 

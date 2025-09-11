@@ -130,7 +130,7 @@ const config = {
             items: [
               {
                 label: 'Quick Start',
-                to: '/docs/',
+                to: '/docs/intro',
               },
               {
                 label: 'Installation',
