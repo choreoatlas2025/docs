@@ -7,7 +7,7 @@ echo "🐳 开始部署 ChoreoAtlas 文档站..."
 
 # 配置变量
 CONTAINER_NAME="choreoatlas-docs"
-IMAGE_NAME="ghcr.io/choreoatlas2025/docs:latest"
+IMAGE_NAME="choreoatlas2025/docs:latest"
 PORT=8080
 
 # 停止并删除旧容器
