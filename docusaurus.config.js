@@ -104,6 +104,7 @@ const config = {
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Docs',
+            to: '/docs/intro',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
