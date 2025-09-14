@@ -35,7 +35,6 @@ jobs:
 
       - name: Stamp Pages artifacts
         run: |
-          echo "choreoatlas.io" > docs/.vitepress/dist/CNAME
           touch docs/.vitepress/dist/.nojekyll
           echo "$(date -u +%FT%TZ) $(git rev-parse --short HEAD)" > docs/.vitepress/dist/version.txt
 
