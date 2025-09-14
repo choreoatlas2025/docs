@@ -113,7 +113,7 @@ export default defineConfig({
   },
 
   // 构建配置
-  base: '/',
+  base: '/docs/',
   cleanUrls: true,
   lastUpdated: true,
   ignoreDeadLinks: true,
