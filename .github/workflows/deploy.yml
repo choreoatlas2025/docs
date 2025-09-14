@@ -33,6 +33,12 @@ jobs:
       - name: Build VitePress website
         run: npm run docs:build
 
+      - name: Stamp Pages artifacts
+        run: |
+          echo "choreoatlas.io" > docs/.vitepress/dist/CNAME
+          touch docs/.vitepress/dist/.nojekyll
+          echo "$(date -u +%FT%TZ) $(git rev-parse --short HEAD)" > docs/.vitepress/dist/version.txt
+
       # Popular action to deploy to GitHub Pages:
       # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-vitepress
       - name: Setup Pages
