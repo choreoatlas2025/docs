@@ -16,7 +16,10 @@ RUN npm ci
 COPY . .
 
 # Initialize git repo (required by VitePress)
-RUN git init && git config user.email "build@choreoatlas.io" && git config user.name "Docker Build" && git add . && git commit -m "Docker build"
+RUN if [ ! -d ".git" ]; then git init; fi && \
+    git config user.email "build@choreoatlas.io" && \
+    git config user.name "Docker Build" && \
+    (git add . && git diff --cached --quiet || git commit -m "Docker build")
 
 # Build the site
 RUN npm run docs:build
