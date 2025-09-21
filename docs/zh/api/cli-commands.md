@@ -1,236 +1,160 @@
 # CLI 命令参考
 
 ::: warning Beta 版本
-ChoreoAtlas CLI 目前处于 **Beta** 状态。命令和选项可能会随着接口的优化而发生变化。
+ChoreoAtlas CLI 目前处于 **Beta** 阶段，命令和参数后续可能调整。
 :::
 
-ChoreoAtlas CLI (`ca`) 提供了一套完整的命令来管理和验证服务契约。
-
-## 核心命令
-
-### `ca discover` - Atlas Scout (发现)
-
-从执行追踪中发现并生成初始契约。
+## 全局选项（社区版）
 
 ```bash
-ca discover --trace <追踪文件> [选项]
+--help, -h     显示帮助信息
+--version      输出版本信息
 ```
 
-**选项:**
-- `--trace <文件>` - 输入追踪文件路径 (JSON 格式)
-- `--output <目录>` - 输出契约文件的目录 (默认: `./services/`)
-- `--format <格式>` - 输出格式: `yaml` 或 `json` (默认: `yaml`)
+## `choreoatlas discover`
 
-**示例:**
-```bash
-# 从追踪生成 ServiceSpec 和 FlowSpec
-ca discover --trace examples/traces/order-flow.json --output ./contracts/
-
-# 指定输出格式
-ca discover --trace order.json --format json --output ./specs/
-```
-
-### `ca validate` - Atlas Proof (校验)
-
-验证 FlowSpec 与实际执行追踪的匹配性。
+从追踪文件生成 FlowSpec 与 ServiceSpec 契约。
 
 ```bash
-ca validate --flow <流程文件> --trace <追踪文件> [选项]
+choreoatlas discover [选项]
 ```
 
-**选项:**
-- `--flow <文件>` - FlowSpec 规约文件路径
-- `--trace <文件>` - 执行追踪文件路径
-- `--edition <版本>` - 产品版本: `ce`, `profree`, `proprivacy`, `cloud`
-- `--report <格式>` - 报告格式: `html`, `json`, `junit` (默认: `html`)
-- `--output <目录>` - 报告输出目录 (默认: `./reports/`)
-- `--baseline <文件>` - 基线文件路径 (Pro+ 版本)
-- `--coverage-threshold <百分比>` - 覆盖率阈值 (默认: 80)
-
-**示例:**
-```bash
-# 基本验证
-ca validate --flow order.flowspec.yaml --trace order-trace.json --edition ce
-
-# 生成 JUnit 格式报告
-ca validate --flow order.flowspec.yaml --trace order-trace.json --report junit --output ./ci-reports/
-
-# Pro 版本的基线验证
-ca validate --flow order.flowspec.yaml --trace order-trace.json --edition profree --baseline baseline.json
-```
-
-### `ca lint` - Atlas Pilot (指导)
-
-对 FlowSpec 和 ServiceSpec 进行静态分析和验证。
+**常用选项**
 
 ```bash
-ca lint --flow <流程文件> [选项]
+--trace string         CE 内部格式的追踪文件路径
+--out string           FlowSpec 输出路径（默认 `discovered.flowspec.yaml`）
+--out-services string  ServiceSpec 输出目录（默认 `./services`）
+--title string         FlowSpec 标题（可选）
 ```
 
-**选项:**
-- `--flow <文件>` - FlowSpec 规约文件路径
-- `--services <目录>` - ServiceSpec 文件目录 (默认: `./services/`)
-- `--strict` - 启用严格模式检查
-- `--format <格式>` - 输出格式: `text`, `json` (默认: `text`)
-
-**示例:**
-```bash
-# 基本语法检查
-ca lint --flow order.flowspec.yaml
-
-# 严格模式检查
-ca lint --flow order.flowspec.yaml --strict
-
-# JSON 格式输出
-ca lint --flow order.flowspec.yaml --format json
-```
-
-### `ca ci-gate` - CI 门禁
-
-组合 lint 和 validate 操作的 CI/CD 集成命令。
+**示例**
 
 ```bash
-ca ci-gate --flow <流程文件> --trace <追踪文件> [选项]
+choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 ```
 
-**选项:**
-- `--flow <文件>` - FlowSpec 规约文件路径
-- `--trace <文件>` - 执行追踪文件路径
-- `--edition <版本>` - 产品版本
-- `--fail-on-coverage <百分比>` - 覆盖率低于阈值时失败
-- `--fail-on-lint` - lint 检查失败时退出
-- `--report-dir <目录>` - 报告输出目录
+## `choreoatlas validate`
 
-**示例:**
-```bash
-# CI 管道中的完整检查
-ca ci-gate --flow order.flowspec.yaml --trace order-trace.json --edition ce --fail-on-coverage 85
-```
-
-## 企业功能命令 (Pro+ 版本)
-
-### `ca baseline` - 基线管理
-
-管理验证基线和趋势分析。
+根据追踪数据校验流程，并可生成报告。
 
 ```bash
-ca baseline <子命令> [选项]
+choreoatlas validate [选项]
 ```
 
-**子命令:**
-- `create` - 创建新基线
-- `update` - 更新现有基线
-- `compare` - 比较验证结果与基线
-- `trend` - 生成趋势分析报告
-
-**示例:**
-```bash
-# 创建基线
-ca baseline create --flow order.flowspec.yaml --trace baseline-trace.json --output baseline.json
-
-# 趋势比较
-ca baseline compare --current results.json --baseline baseline.json
-```
-
-### `ca policy` - 策略管理
-
-管理组织级验证策略和规则。
+**常用选项**
 
 ```bash
-ca policy <子命令> [选项]
+--flow string               FlowSpec 文件路径（默认 `.flowspec.yaml`）
+--trace string              追踪文件路径（必填）
+--semantic bool             是否启用语义校验（默认 `true`）
+--causality string          因果模式：`strict` / `temporal` / `off`（默认 `temporal`）
+--causality-tolerance int   因果容差（毫秒，默认 `50`）
+--baseline string           基线文件路径（可选）
+--baseline-missing string   基线缺失时策略：`fail` / `treat-as-absolute`（默认 `fail`）
+--threshold-steps float     步骤覆盖率阈值（默认 `0.9`）
+--threshold-conds float     条件通过率阈值（默认 `0.95`）
+--skip-as-fail              将 SKIP 条件视为失败
+--report-format string      报告格式：`html` / `json` / `junit`
+--report-out string         报告输出路径（与 `--report-format` 搭配）
 ```
 
-**子命令:**
-- `validate` - 验证策略文件
-- `apply` - 应用策略到项目
-- `list` - 列出可用策略
-
-### `ca audit` - 审计日志
-
-生成和导出审计日志。
+**示例**
 
 ```bash
-ca audit export --format <格式> --output <文件> [选项]
+# 生成 HTML 报告
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
+
+# 严格阈值
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --threshold-steps 1.0 --threshold-conds 1.0 --skip-as-fail
 ```
 
-## 全局选项
+## `choreoatlas lint`
 
-所有命令都支持以下全局选项:
+对 FlowSpec 及其引用的 ServiceSpec 进行结构和 Schema 校验。
 
-- `--config <文件>` - 指定配置文件路径
-- `--verbose` - 启用详细输出
-- `--quiet` - 静默模式
-- `--no-color` - 禁用彩色输出
-- `--help` - 显示帮助信息
-- `--version` - 显示版本信息
-
-## 配置文件
-
-ChoreoAtlas CLI 支持 YAML 配置文件 (默认: `.choreoatlas.yaml`):
-
-```yaml
-# .choreoatlas.yaml
-edition: ce
-reports:
-  format: html
-  output: ./reports
-coverage:
-  threshold: 80
-services:
-  directory: ./services
-policies:
-  directory: ./policies
+```bash
+choreoatlas lint [选项]
 ```
 
-## 环境变量
+**常用选项**
 
-- `CHOREOATLAS_EDITION` - 默认产品版本
-- `CHOREOATLAS_CONFIG` - 配置文件路径
-- `CHOREOATLAS_TELEMETRY` - 遥测开关 (`0` 禁用，`1` 启用)
-- `CHOREOATLAS_NO_COLOR` - 禁用彩色输出
+```bash
+--flow string   FlowSpec 文件路径（默认 `.flowspec.yaml`）
+--schema bool   是否执行 JSON Schema 校验（默认 `true`）
+```
+
+**示例**
+
+```bash
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+```
+
+## `choreoatlas ci-gate`
+
+在 CI/CD 中组合 lint + validate，任何失败都会返回非零退出码。
+
+```bash
+choreoatlas ci-gate [选项]
+```
+
+**常用选项**
+
+```bash
+--flow string   FlowSpec 文件路径（必填）
+--trace string  追踪文件路径（必填）
+```
+
+**示例**
+
+```bash
+choreoatlas ci-gate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json
+```
+
+## `choreoatlas version`
+
+输出版本和构建信息。
+
+```bash
+choreoatlas version [选项]
+```
+
+```bash
+--json    以 JSON 输出
+--short   仅输出版本号
+```
 
 ## 退出码
 
-- `0` - 成功
-- `1` - 一般错误
-- `2` - 配置错误
-- `3` - 验证失败
-- `4` - 覆盖率不达标
-- `5` - 基线偏差过大
+| 退出码 | 说明 |
+| --- | --- |
+| `0` | 成功 |
+| `1` | CLI 错误（参数无效等） |
+| `2` | 输入或解析错误（文件缺失、格式无效） |
+| `3` | 校验失败（追踪与 FlowSpec 不一致） |
+| `4` | Gate 失败（阈值或基线不满足） |
 
-## 示例工作流
-
-### 完整的契约驱动开发流程
+## 可选环境变量
 
 ```bash
-# 1. 从追踪发现契约
-ca discover --trace production-trace.json --output ./contracts/
+# 自定义配置文件路径（若启用）
+export CHOREOATLAS_CONFIG=/path/to/config.yaml
 
-# 2. 静态验证契约
-ca lint --flow ./contracts/order-fulfillment.flowspec.yaml
-
-# 3. 动态验证契约
-ca validate --flow ./contracts/order-fulfillment.flowspec.yaml \
-           --trace test-trace.json \
-           --edition ce \
-           --report html
-
-# 4. CI 门禁集成
-ca ci-gate --flow ./contracts/order-fulfillment.flowspec.yaml \
-          --trace integration-trace.json \
-          --edition ce \
-          --fail-on-coverage 90
+# 开启调试日志
+export CHOREOATLAS_DEBUG=true
 ```
 
-## 获取帮助
+## 示例脚本（完整闭环）
 
 ```bash
-# 查看所有命令
-ca --help
+#!/usr/bin/env bash
+set -euo pipefail
 
-# 查看特定命令帮助
-ca validate --help
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 
-# 查看版本信息
-ca --version
+choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
+
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
 ```

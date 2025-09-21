@@ -1,147 +1,78 @@
 # Basic Usage
 
 ::: warning Beta Version
-ChoreoAtlas CLI is currently in **Beta** status. Usage patterns and commands may evolve.
+ChoreoAtlas CLI is currently in **Beta**; commands and flags may evolve.
 :::
 
-This guide covers the fundamental usage patterns of ChoreoAtlas CLI.
+This page summarises the everyday commands you will run after completing the quickstart.
 
-## Command Structure
+## Alias recap
 
-ChoreoAtlas CLI follows a simple command structure:
-
-```bash
-ca <command> [options] [arguments]
-```
-
-## Core Commands
-
-### `ca lint` - Static Validation
-
-Validate contract structure and references without execution data:
+Use the Docker alias so you always run the latest CLI without local installation:
 
 ```bash
-# Lint a FlowSpec
-ca lint --flow myflow.flowspec.yaml
-
-# Lint a ServiceSpec
-ca lint --service myservice.servicespec.yaml
-
-# Lint all specs in a directory
-ca lint --directory ./contracts/
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 ```
 
-### `ca validate` - Dynamic Validation
-
-Validate contracts against actual execution traces:
+## Lint a FlowSpec
 
 ```bash
-# Basic validation
-ca validate --flow myflow.flowspec.yaml --trace execution.trace.json
-
-# Specify edition
-ca validate --flow myflow.flowspec.yaml --trace execution.trace.json --edition ce
-
-# Output to file
-ca validate --flow myflow.flowspec.yaml --trace execution.trace.json --output validation-report.json
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
 ```
 
-### `ca discover` - Contract Generation
+By default, lint performs:
+- JSON Schema validation (set `--schema=false` to skip)
+- Flow graph checks (unique steps, dependencies, variable resolution)
+- ServiceSpec schema validation for referenced services
 
-Generate contracts from execution traces:
+## Validate against a trace
 
 ```bash
-# Basic discovery
-ca discover --trace execution.trace.json --output ./generated-contracts/
-
-# Discover with options
-ca discover --trace execution.trace.json --output ./contracts/ --format yaml
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
 ```
 
-## Common Workflows
+Useful flags:
+- `--threshold-steps`, `--threshold-conds`: enforce minimum coverage/condition rates
+- `--skip-as-fail`: treat SKIP conditions as failures
+- `--baseline`, `--baseline-missing`: compare against a stored baseline
+- `--report-format`, `--report-out`: emit HTML/JSON/JUnit reports
 
-### 1. New Project Setup
+## Discover contracts from a trace
 
 ```bash
-# Create project directory
-mkdir my-microservice-contracts
-cd my-microservice-contracts
-
-# Generate initial contracts from traces
-ca discover --trace production.trace.json --output ./
-
-# Validate the generated contracts
-ca lint --directory ./
+choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 ```
 
-### 2. Contract Validation in CI
+Review the generated files, keep what you need, and iterate on the specs.
+
+## Combined workflow script
 
 ```bash
-# Run in CI pipeline
-ca validate --flow order-flow.flowspec.yaml \
-           --trace test-execution.trace.json \
-           --edition ce \
-           --output junit-results.xml \
-           --format junit
+#!/usr/bin/env bash
+set -euo pipefail
+
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+
+choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
+
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
 ```
 
-### 3. Development Workflow
+## Exit codes (recap)
 
-```bash
-# 1. Create/modify contracts
-vim user-service.servicespec.yaml
+| Code | Meaning |
+| --- | --- |
+| `0` | Success |
+| `1` | CLI error (invalid flags, unexpected failures) |
+| `2` | Input or parsing error |
+| `3` | Validation failed |
+| `4` | Gate failed |
 
-# 2. Static validation
-ca lint --service user-service.servicespec.yaml
+## Related topics
 
-# 3. Test against sample data
-ca validate --flow user-flow.flowspec.yaml --trace sample.trace.json
-
-# 4. Generate reports
-ca validate --flow user-flow.flowspec.yaml --trace sample.trace.json --format html
-```
-
-## Output Formats
-
-ChoreoAtlas supports multiple output formats:
-
-```bash
-# JSON (default)
-ca validate --flow myflow.flowspec.yaml --trace trace.json --format json
-
-# HTML report
-ca validate --flow myflow.flowspec.yaml --trace trace.json --format html
-
-# JUnit XML (for CI)
-ca validate --flow myflow.flowspec.yaml --trace trace.json --format junit
-
-# Plain text summary
-ca validate --flow myflow.flowspec.yaml --trace trace.json --format text
-```
-
-## Configuration
-
-Create a `.choreoatlas.yaml` config file in your project root:
-
-```yaml
-# Default edition
-edition: ce
-
-# Default paths
-contracts_dir: ./contracts
-traces_dir: ./traces
-
-# Validation settings
-strict_mode: true
-fail_on_warnings: false
-
-# Report settings
-default_format: html
-output_dir: ./reports
-```
-
-## Next Steps
-
-- Learn about [ServiceSpec contracts](./servicespec.md)
-- Understand [FlowSpec orchestration](./flowspec.md)
-- Explore [advanced validation features](./validation.md)
+- [Getting Started](/guide/getting-started)
+- [CI Integration](/guide/ci-integration)
+- [Trace Conversion](/guide/trace-conversion)
+- [CLI Reference](/api/cli-commands)

@@ -4,286 +4,157 @@
 ChoreoAtlas CLI is currently in **Beta** status. Commands and options may change as we refine the interface.
 :::
 
-Complete reference for all ChoreoAtlas CLI commands.
-
-## Global Options
-
-All commands support these global options:
+## Global Options (Community Edition)
 
 ```bash
---edition string     Edition to use (ce, profree, proprivacy, cloud) (default "ce")
---config string      Config file path (default ".choreoatlas.yaml")
---verbose, -v        Enable verbose logging
---quiet, -q         Suppress all output except errors
---help, -h          Show help
---version           Show version information
+--help, -h     Show help information
+--version      Print version information
 ```
 
-## Commands
+## `choreoatlas discover`
 
-### `ca discover`
-
-Generate ServiceSpec and FlowSpec contracts from execution traces.
+Generate FlowSpec and ServiceSpec contracts directly from a trace file.
 
 ```bash
-ca discover [options]
+choreoatlas discover [options]
 ```
 
-**Options:**
-```bash
---trace string           Path to trace file (JSON/OTLP format)
---out-servicespec dir    Output directory for ServiceSpec files
---out-flowspec string    Output path for FlowSpec file
---format string          Output format: yaml, json (default "yaml")
---service-filter string  Filter services by regex pattern
-```
-
-**Examples:**
-```bash
-# Basic discovery
-ca discover --trace order.json --out-servicespec ./services/
-
-# Generate both ServiceSpec and FlowSpec
-ca discover \
-  --trace order.json \
-  --out-servicespec ./services/ \
-  --out-flowspec ./flows/order.flowspec.yaml
-
-# Filter specific services
-ca discover \
-  --trace order.json \
-  --service-filter "^(order|payment|shipping)$" \
-  --out-servicespec ./core-services/
-```
-
-### `ca validate`
-
-Validate ServiceSpec and FlowSpec contracts against execution traces.
+**Options**
 
 ```bash
-ca validate [options]
+--trace string         Path to the trace file (CE internal JSON)
+--out string           Output path for the FlowSpec file (default `discovered.flowspec.yaml`)
+--out-services string  Directory for generated ServiceSpec files (default `./services`)
+--title string         FlowSpec title (optional)
 ```
 
-**Options:**
-```bash
---servicespec string     Path to ServiceSpec directory or file
---flowspec string        Path to FlowSpec file
---trace string           Path to trace file for validation
---report-html string     Generate HTML report at path
---report-json string     Generate JSON report at path
---report-junit string    Generate JUnit XML report at path
---baseline string        Baseline report for comparison
---coverage-threshold int Coverage threshold (0-100) (default 50)
-```
-
-**Examples:**
-```bash
-# Basic validation
-ca validate \
-  --servicespec ./services/ \
-  --flowspec ./flows/order.flowspec.yaml \
-  --trace ./traces/order-success.json
-
-# Generate HTML report
-ca validate \
-  --servicespec ./services/ \
-  --flowspec ./flows/order.flowspec.yaml \
-  --trace ./traces/order-success.json \
-  --report-html ./reports/validation.html
-
-# Set coverage threshold
-ca validate \
-  --servicespec ./services/ \
-  --flowspec ./flows/order.flowspec.yaml \
-  --trace ./traces/order-success.json \
-  --coverage-threshold 80
-```
-
-### `ca lint`
-
-Static validation of ServiceSpec and FlowSpec contracts.
+**Example**
 
 ```bash
-ca lint [options]
+choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 ```
 
-**Options:**
-```bash
---servicespec string    Path to ServiceSpec directory or file
---flowspec string       Path to FlowSpec file
---strict               Enable strict mode (warnings become errors)
---format string        Output format: text, json (default "text")
-```
+## `choreoatlas validate`
 
-**Examples:**
-```bash
-# Lint ServiceSpec files
-ca lint --servicespec ./services/
-
-# Lint FlowSpec file
-ca lint --flowspec ./flows/order.flowspec.yaml
-
-# Strict mode
-ca lint --servicespec ./services/ --strict
-```
-
-### `ca ci-gate`
-
-Combined lint and validate for CI/CD pipelines.
+Validate an orchestration against a trace and optionally emit reports.
 
 ```bash
-ca ci-gate [options]
+choreoatlas validate [options]
 ```
 
-**Options:**
-```bash
---servicespec string     Path to ServiceSpec directory
---flowspec string        Path to FlowSpec file
---trace string           Path to trace file
---junit string           JUnit XML output path
---coverage-threshold int Required coverage percentage
---fail-on-warnings      Treat warnings as failures
-```
-
-**Examples:**
-```bash
-# CI validation with JUnit output
-ca ci-gate \
-  --servicespec ./services/ \
-  --flowspec ./flows/order.flowspec.yaml \
-  --trace ./traces/integration-test.json \
-  --junit ./reports/junit.xml \
-  --coverage-threshold 75
-```
-
-### `ca version`
-
-Display version and build information.
+**Options**
 
 ```bash
-ca version [options]
+--flow string               FlowSpec file path (default `.flowspec.yaml`)
+--trace string              Trace file path (required)
+--semantic bool             Enable semantic validation (default `true`)
+--causality string          Causality mode: `strict`, `temporal`, or `off` (default `temporal`)
+--causality-tolerance int   Causality tolerance in milliseconds (default `50`)
+--baseline string           Baseline file path (optional)
+--baseline-missing string   Strategy when baseline is missing: `fail` or `treat-as-absolute` (default `fail`)
+--threshold-steps float     Minimum step coverage (default `0.9`)
+--threshold-conds float     Minimum condition pass rate (default `0.95`)
+--skip-as-fail              Treat SKIP conditions as failures
+--report-format string      Report format: `html`, `json`, or `junit`
+--report-out string         Output file for the report (required when `--report-format` is set)
 ```
 
-**Options:**
+**Examples**
+
 ```bash
---json    Output in JSON format
---short   Show only version number
+# Basic validation with an HTML report
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
+
+# Enforce strict coverage thresholds
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --threshold-steps 1.0 --threshold-conds 1.0 --skip-as-fail
 ```
 
-**Examples:**
+## `choreoatlas lint`
+
+Run structural and schema validation over a FlowSpec and its referenced ServiceSpecs.
+
 ```bash
-# Full version info
-ca version
-
-# JSON format
-ca version --json
-
-# Short version
-ca version --short
+choreoatlas lint [options]
 ```
 
-## Configuration File
+**Options**
 
-Create `.choreoatlas.yaml` in your project root:
+```bash
+--flow string   FlowSpec file path (default `.flowspec.yaml`)
+--schema bool   Enable JSON Schema validation (default `true`)
+```
 
-```yaml
-# Default edition
-edition: ce
+**Example**
 
-# Default paths
-servicespec_dir: ./contracts/services
-flowspec_dir: ./contracts/flows
-traces_dir: ./traces
-reports_dir: ./reports
+```bash
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+```
 
-# Validation settings
-coverage:
-  threshold: 80
-  fail_on_low: true
+## `choreoatlas ci-gate`
 
-strict_mode: false
-fail_on_warnings: false
+Combine lint + validate for CI/CD usage. Exits non-zero if validation fails.
 
-# Report settings
-reports:
-  html: true
-  json: true
-  junit: false
-  
-# Pro/Cloud settings (if applicable)
-baseline:
-  enabled: false
-  path: ./baselines/
+```bash
+choreoatlas ci-gate [options]
+```
 
-notifications:
-  slack_webhook: ""
-  email: []
+**Options**
+
+```bash
+--flow string   FlowSpec file path (required)
+--trace string  Trace file path (required)
+```
+
+**Example**
+
+```bash
+choreoatlas ci-gate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json
+```
+
+## `choreoatlas version`
+
+Display version and build metadata.
+
+```bash
+choreoatlas version [options]
+```
+
+```bash
+--json    Output version information as JSON
+--short   Print only the version number
 ```
 
 ## Exit Codes
 
-- `0` - Success
-- `1` - General error
-- `2` - Contract validation failed
-- `3` - Coverage threshold not met
-- `4` - Configuration error
-- `5` - File not found
+| Code | Description |
+| --- | --- |
+| `0` | Success |
+| `1` | CLI error (invalid flags, unexpected failures) |
+| `2` | Input or parsing error (missing files, invalid format) |
+| `3` | Validation failed (trace and FlowSpec mismatch) |
+| `4` | Gate failed (thresholds or baseline not satisfied) |
 
-## Environment Variables
+## Environment Variables (optional)
 
 ```bash
-# Override edition
-export CHOREOATLAS_EDITION=profree
-
-# Disable telemetry (Pro editions)
-export CHOREOATLAS_TELEMETRY=false
-
-# Custom config path
+# Custom configuration file path (if supported)
 export CHOREOATLAS_CONFIG=/path/to/config.yaml
 
-# Debug logging
+# Enable verbose debug logs
 export CHOREOATLAS_DEBUG=true
 ```
 
-## Examples
-
-### Complete Workflow
+## Complete Workflow Script (sample)
 
 ```bash
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-echo "🔍 Discovering contracts from traces..."
-ca discover \
-  --trace ./traces/production-sample.json \
-  --out-servicespec ./contracts/services/ \
-  --out-flowspec ./contracts/flows/main-flow.flowspec.yaml
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 
-echo "🧹 Linting contracts..."
-ca lint --servicespec ./contracts/services/ --flowspec ./contracts/flows/
+choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 
-echo "✅ Validating against test traces..."
-ca validate \
-  --servicespec ./contracts/services/ \
-  --flowspec ./contracts/flows/main-flow.flowspec.yaml \
-  --trace ./traces/integration-test.json \
-  --report-html ./reports/validation.html \
-  --coverage-threshold 75
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
 
-echo "🎉 All checks passed!"
-```
-
-### CI/CD Integration
-
-```bash
-# GitHub Actions step
-- name: Validate Service Choreography
-  run: |
-    ca ci-gate \
-      --servicespec ./contracts/services/ \
-      --flowspec ./contracts/flows/order-flow.flowspec.yaml \
-      --trace ./traces/e2e-test.json \
-      --junit ./reports/choreography-junit.xml \
-      --coverage-threshold 80 \
-      --fail-on-warnings
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
 ```
