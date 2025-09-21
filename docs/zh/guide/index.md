@@ -31,15 +31,11 @@ ChoreoAtlas 实现双契约架构，为微服务编排提供语义验证和时�
 ## 快速开始
 
 ```bash
-# 安装 ChoreoAtlas CLI
-curl -sSL https://choreoatlas.io/install.sh | bash
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 
-# 验证安装
-ca version
-
-# 运行示例
-ca validate --flow examples/order.flowspec.yaml \
-           --trace examples/order.trace.json
+choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml \
+  --trace traces/successful-order.trace.json \
+  --report-format html --report-out reports/validation-report.html
 ```
 
 ## 支持的版本

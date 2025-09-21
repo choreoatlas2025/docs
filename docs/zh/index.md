@@ -41,21 +41,26 @@ features:
 ChoreoAtlas CLI 目前处于 **Beta** 状态。我们持续改进产品，功能和 API 可能会发生变化。欢迎您的反馈和贡献！
 :::
 
-## 快速示例
+## 5 分钟极速上手
 
 ```bash
-# 安装 ChoreoAtlas CLI
-curl -sSL https://choreoatlas.io/install.sh | bash
+# 1）一行别名（无需本地安装）
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 
-# 根据执行追踪验证流程
-ca validate --flow order-fulfillment.flowspec.yaml \
-           --trace order-trace.json \
-           --edition ce
-
-# 从追踪生成契约
-ca discover --trace order-trace.json \
-           --output ./contracts/
+# 2）执行校验并生成 HTML 报告
+choreoatlas validate \
+  --flow contracts/flows/order-flow.graph.flowspec.yaml \
+  --trace traces/successful-order.trace.json \
+  --report-format html --report-out reports/validation-report.html
 ```
+
+预期输出
+- 每个编排步骤的 PASS/FAIL 行（例如 `[PASS] 创建订单`）
+- `reports/validation-report.html`，包含时间线、覆盖率和 Gate 状态
+
+提示
+- 使用 [quickstart-demo](https://github.com/choreoatlas2025/quickstart-demo) 获得开箱即用的环境（`git clone … && make demo`）。
+- 想了解完整流程，请继续阅读 [快速开始](/zh/guide/getting-started)，掌握探索 → 检查 → 校验的闭环。
 
 ## 支持版本
 

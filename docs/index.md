@@ -41,21 +41,26 @@ features:
 ChoreoAtlas CLI is currently in **Beta** status. Features and APIs may change as we continue to improve the product. We welcome your feedback and contributions!
 :::
 
-## Quick Example
+## Quickstart (5 minutes)
 
 ```bash
-# Install ChoreoAtlas CLI
-curl -sSL https://choreoatlas.io/install.sh | bash
+# 1) One-line alias (no local install)
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 
-# Validate a flow against execution trace  
-ca validate --flow order-fulfillment.flowspec.yaml \
-           --trace order-trace.json \
-           --edition ce
-
-# Generate contracts from traces
-ca discover --trace order-trace.json \
-           --output ./contracts/
+# 2) Validate a sample flow and emit an HTML report
+choreoatlas validate \
+  --flow contracts/flows/order-flow.graph.flowspec.yaml \
+  --trace traces/successful-order.trace.json \
+  --report-format html --report-out reports/validation-report.html
 ```
+
+Expected output
+- PASS/FAIL lines for each orchestration step (e.g. `[PASS] Create Order`)
+- `reports/validation-report.html` rendered with timeline, coverage, and gate status
+
+Tips
+- Use the [quickstart demo](https://github.com/choreoatlas2025/quickstart-demo) for a ready-to-run workspace (`git clone … && make demo`).
+- Continue with [Getting Started](/guide/getting-started) for the full discover → lint → validate workflow.
 
 ## Supported Editions
 

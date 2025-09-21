@@ -1,66 +1,55 @@
 # Installation
 
 ::: warning Beta Version
-ChoreoAtlas CLI is currently in **Beta** status. Installation methods and packages may change.
+ChoreoAtlas CLI is currently in **Beta**; packaging may evolve.
 :::
 
-This guide covers all the ways to install ChoreoAtlas CLI on your system.
+Choose one of the following installation methods.
 
-## Quick Install (Recommended)
-
-```bash
-# Install via curl
-curl -sSL https://choreoatlas.io/install.sh | bash
-
-# Verify installation
-ca version
-```
-
-## Manual Installation
-
-### Download from GitHub Releases
-
-1. Visit our [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) page
-2. Download the binary for your platform:
-   - **Linux AMD64**: `choreoatlas-linux-amd64.tar.gz`
-   - **Linux ARM64**: `choreoatlas-linux-arm64.tar.gz`
-   - **macOS AMD64**: `choreoatlas-darwin-amd64.tar.gz`
-   - **macOS ARM64**: `choreoatlas-darwin-arm64.tar.gz`
-   - **Windows AMD64**: `choreoatlas-windows-amd64.zip`
-
-3. Extract and install:
+## Option 1 – Docker alias (recommended)
 
 ```bash
-# Linux/macOS
-tar -xzf choreoatlas-*.tar.gz
-sudo mv choreoatlas /usr/local/bin/ca
-chmod +x /usr/local/bin/ca
-
-# Verify installation
-ca version
+alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 ```
 
-### Docker Installation
+- No binaries to install or update manually
+- Works on any host with Docker installed
+- Used throughout the quickstart and guides
+
+## Option 2 – Download from GitHub Releases
+
+1. Visit the [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) page
+2. Download the archive for your platform (Linux/macOS/Windows, amd64 or arm64)
+3. Extract and move the binary into your PATH, for example:
 
 ```bash
-# Pull the official image
-docker pull choreoatlas/cli:latest
-
-# Create an alias
-echo 'alias ca="docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest"' >> ~/.bashrc
-source ~/.bashrc
-
-# Verify
-ca version
+tar -xzf choreoatlas-darwin-arm64.tar.gz
+sudo mv choreoatlas /usr/local/bin/choreoatlas
+chmod +x /usr/local/bin/choreoatlas
 ```
 
-## System Requirements
+Verify the installation:
 
-- **OS**: Linux, macOS, Windows
-- **Arch**: amd64, arm64  
-- **Memory**: 64MB RAM minimum
+```bash
+choreoatlas --version
+```
+
+## Option 3 – Build from source
+
+```bash
+git clone https://github.com/choreoatlas2025/cli.git
+cd cli
+make build
+export PATH=$PWD/bin:$PATH
+choreoatlas --version
+```
+
+## System requirements
+
+- **OS**: Linux, macOS, or Windows
+- **CPU**: amd64 / arm64
+- **Memory**: 64MB minimum
 - **Storage**: 20MB available space
+- **Trace data**: OpenTelemetry/Jaeger JSON or converted CE format
 
-## Next Steps
-
-Once installed, head to our [Getting Started Guide](./getting-started.md) to create your first contracts.
+You are ready to continue with the [Getting Started guide](./getting-started.md).

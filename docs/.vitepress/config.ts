@@ -32,7 +32,9 @@ export default defineConfig({
                 { text: 'Introduction', link: '/guide/' },
                 { text: 'Installation', link: '/guide/installation' },
                 { text: 'Getting Started', link: '/guide/getting-started' },
-                { text: 'Basic Usage', link: '/guide/basic-usage' }
+                { text: 'Basic Usage', link: '/guide/basic-usage' },
+                { text: 'CI Integration', link: '/guide/ci-integration' },
+                { text: 'Trace Conversion', link: '/guide/trace-conversion' }
               ]
             }
           ],
@@ -73,7 +75,9 @@ export default defineConfig({
                 { text: '介绍', link: '/zh/guide/' },
                 { text: '安装', link: '/zh/guide/installation' },
                 { text: '快速开始', link: '/zh/guide/getting-started' },
-                { text: '基础用法', link: '/zh/guide/basic-usage' }
+                { text: '基础用法', link: '/zh/guide/basic-usage' },
+                { text: 'CI 集成', link: '/zh/guide/ci-integration' },
+                { text: '追踪转换', link: '/zh/guide/trace-conversion' }
               ]
             }
           ],
