@@ -26,20 +26,17 @@ Get up and running with ChoreoAtlas CLI in just 15 minutes. This guide will walk
 ### Option 1: Download Binary (Recommended)
 
 ```bash
-# Download the latest release for your platform
-curl -sSL https://choreoatlas.io/install.sh | bash
+# Visit releases and download the binary for your platform
+# https://github.com/choreoatlas2025/cli/releases
 
-# Verify installation
-ca --version
+# Verify installation (binary named 'choreoatlas')
+choreoatlas --version
 ```
 
 ### Option 2: Using Docker
 
 ```bash
-# Pull the official image
-docker pull choreoatlas/cli:latest
-
-# Create an alias for convenience
+# Create a convenient alias (no local install needed)
 alias ca='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
 ```
 
@@ -61,7 +58,7 @@ export PATH=$PWD/bin:$PATH
 
 ### Step 1: Prepare Sample Data
 
-First, let's create a simple trace file to work with:
+First, let's create a simple trace file in the CE internal format:
 
 ```bash
 # Create a sample directory
@@ -75,34 +72,30 @@ cat > traces/order-trace.json << 'EOF'
     {
       "name": "create-order",
       "service": "order-service",
-      "timestamp": "2025-01-15T10:00:00Z",
-      "duration": "45ms",
-      "tags": {
-        "http.method": "POST",
-        "http.url": "/orders",
-        "http.status_code": "201"
-      }
+      "startNanos": 1694787600090000000,
+      "endNanos": 1694787600215000000,
+      "attributes": {"http.status_code": 201}
     },
     {
       "name": "reserve-items",
       "service": "inventory-service",
-      "timestamp": "2025-01-15T10:00:01Z",
-      "duration": "23ms",
-      "parent": "create-order"
+      "startNanos": 1694787600050000000,
+      "endNanos": 1694787600082000000,
+      "attributes": {"http.status_code": 201}
     },
     {
       "name": "charge-payment",
       "service": "payment-service",
-      "timestamp": "2025-01-15T10:00:02Z",
-      "duration": "67ms",
-      "parent": "create-order"
+      "startNanos": 1694787600110000000,
+      "endNanos": 1694787600188000000,
+      "attributes": {"http.status_code": 200}
     },
     {
       "name": "confirm-order",
       "service": "order-service",
-      "timestamp": "2025-01-15T10:00:03Z",
-      "duration": "12ms",
-      "parent": "create-order"
+      "startNanos": 1694787600000000000,
+      "endNanos": 1694787600045000000,
+      "attributes": {"http.status_code": 200}
     }
   ]
 }
@@ -114,8 +107,11 @@ EOF
 Use the `discover` command to generate initial contracts from your trace data:
 
 ```bash
-# Generate ServiceSpec and FlowSpec from trace
-ca discover --trace traces/order-trace.json --output ./contracts/
+# Generate FlowSpec and ServiceSpecs from trace
+choreoatlas discover \
+  --trace traces/order-trace.json \
+  --out contracts/order-fulfillment.flowspec.yaml \
+  --out-services contracts/services
 
 # Check generated files
 ls -la contracts/
@@ -178,15 +174,13 @@ Now validate your contracts against the execution trace:
 
 ```bash
 # Perform validation
-ca validate --flow contracts/order-fulfillment.flowspec.yaml \
+choreoatlas validate --flow contracts/order-fulfillment.flowspec.yaml \
            --trace traces/order-trace.json \
-           --edition ce \
-           --report html
+           --report-format html --report-out reports/validation-report.html
 
 # Check results
 ls -la reports/
-open reports/validation-report.html  # macOS
-# xdg-open reports/validation-report.html  # Linux
+# Open reports/validation-report.html in your browser
 ```
 
 ### Step 5: Static Analysis (Atlas Pilot)
@@ -195,7 +189,7 @@ Run static checks on your contracts:
 
 ```bash
 # Lint the flow specification
-ca lint --flow contracts/order-fulfillment.flowspec.yaml
+choreoatlas lint --flow contracts/order-fulfillment.flowspec.yaml
 
 # Expected output:
 # ✓ FlowSpec syntax is valid
@@ -210,10 +204,8 @@ For automated validation in CI/CD pipelines:
 
 ```bash
 # Combined lint + validate for CI gates
-ca ci-gate --flow contracts/order-fulfillment.flowspec.yaml \
-          --trace traces/order-trace.json \
-          --edition ce \
-          --fail-on-coverage 80
+choreoatlas ci-gate --flow contracts/order-fulfillment.flowspec.yaml \
+          --trace traces/order-trace.json
 ```
 
 ## 📊 Understanding Validation Reports

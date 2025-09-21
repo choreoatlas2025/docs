@@ -19,28 +19,33 @@ Complete reference for all ChoreoAtlas CLI commands including:
 
 ### Essential Commands
 ```bash
-# Discover contracts from traces
-ca discover --trace <file> --output <dir>
+# Optional: alias for shorter commands
+alias ca=choreoatlas
 
-# Validate contracts against execution
-ca validate --flow <file> --trace <file> --edition ce
+# Discover contracts from traces (FlowSpec + ServiceSpecs)
+choreoatlas discover --trace <trace.json> \
+  --out <flowspec.yaml> \
+  --out-services <dir>
 
-# Static analysis and linting
-ca lint --flow <file>
+# Validate against execution traces
+choreoatlas validate --flow <flowspec.yaml> --trace <trace.json>
 
-# CI/CD gate command
-ca ci-gate --flow <file> --trace <file> --edition ce
+# Static analysis and linting (schema + structure)
+choreoatlas lint --flow <flowspec.yaml>
+
+# CI/CD gate (lint + validate with exit codes)
+choreoatlas ci-gate --flow <flowspec.yaml> --trace <trace.json>
 ```
 
 ### Getting Help
 ```bash
 # Global help
-ca --help
+choreoatlas --help
 
 # Command-specific help
-ca validate --help
-ca discover --help
-ca lint --help
+choreoatlas validate --help
+choreoatlas discover --help
+choreoatlas lint --help
 ```
 
 ## 📖 Related Documentation
