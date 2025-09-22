@@ -33,8 +33,12 @@ export default defineConfig({
                 { text: 'Installation', link: '/guide/installation' },
                 { text: 'Getting Started', link: '/guide/getting-started' },
                 { text: 'Basic Usage', link: '/guide/basic-usage' },
+                { text: 'Reports', link: '/guide/reports' },
                 { text: 'CI Integration', link: '/guide/ci-integration' },
-                { text: 'Trace Conversion', link: '/guide/trace-conversion' }
+                { text: 'Trace Conversion', link: '/guide/trace-conversion' },
+                { text: 'Recipes: Batch Validation', link: '/guide/recipes-batch-validate' },
+                { text: 'Recipes: Thresholds & Baselines', link: '/guide/recipes-baselines-thresholds' },
+                { text: 'Recipes: Discover → Refine → Validate', link: '/guide/recipes-discover-refine-validate' }
               ]
             }
           ],
@@ -76,8 +80,12 @@ export default defineConfig({
                 { text: '安装', link: '/zh/guide/installation' },
                 { text: '快速开始', link: '/zh/guide/getting-started' },
                 { text: '基础用法', link: '/zh/guide/basic-usage' },
+                { text: '报告输出', link: '/zh/guide/reports' },
                 { text: 'CI 集成', link: '/zh/guide/ci-integration' },
-                { text: '追踪转换', link: '/zh/guide/trace-conversion' }
+                { text: '追踪转换', link: '/zh/guide/trace-conversion' },
+                { text: 'Recipes：批量校验', link: '/zh/guide/recipes-batch-validate' },
+                { text: 'Recipes：阈值与基线', link: '/zh/guide/recipes-baselines-thresholds' },
+                { text: 'Recipes：发现→精修→校验', link: '/zh/guide/recipes-discover-refine-validate' }
               ]
             }
           ],
