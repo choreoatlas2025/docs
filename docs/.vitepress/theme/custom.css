@@ -1,0 +1,130 @@
+/* Custom styles for ChoreoAtlas documentation */
+
+/* Override default VitePress hero styles when custom hero is present */
+.custom-hero-wrapper ~ .VPHero {
+  display: none;
+}
+
+/* Smooth scrolling for the entire site */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+/* Code block enhancements */
+.vp-doc pre {
+  position: relative;
+}
+
+.vp-doc pre code {
+  font-size: 0.875rem;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(155, 155, 155, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 155, 155, 0.7);
+}
+
+/* Dark mode scrollbar */
+:root.dark ::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.5);
+}
+
+:root.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.7);
+}
+
+/* Performance optimizations */
+.hero-animation svg,
+.hero-interactive svg {
+  will-change: transform;
+}
+
+/* Print styles */
+@media print {
+  .custom-hero,
+  .VPNav,
+  .VPSidebar,
+  .VPFooter {
+    display: none;
+  }
+
+  .vp-doc {
+    max-width: 100%;
+    padding: 0;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    border: 2px solid currentColor;
+  }
+
+  .btn-secondary {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Loading animation for demos */
+.demo-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-radius: 50%;
+  border-top-color: #3b82f6;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
