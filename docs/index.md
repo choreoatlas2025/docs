@@ -148,7 +148,7 @@ Managed workspace and collaboration
 ---
 
 <div style="text-align: center; margin: 2rem 0;">
-  <a href="/docs/guide/getting-started" class="vp-button vp-button-medium vp-button-brand">Get Started →</a>
+  <a href="/guide/getting-started" class="vp-button vp-button-medium vp-button-brand">Get Started →</a>
 </div>
 
 </div>

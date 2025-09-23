@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json",
+  "default": true,
+  "MD013": false,               // line length — allow long paragraphs
+  "MD033": false,               // inline HTML allowed (VitePress components/markup)
+  "MD041": false,               // first line heading not required (frontmatter first)
+  "MD009": false,               // trailing spaces (tolerate in lists/code pasted)
+  "MD022": false,               // blank lines around headings (frontmatter interaction)
+  "MD025": false,               // multiple top-level headings (some landing pages)
+  "MD026": false,               // punctuation in headings (em dash, etc.)
+  "MD029": false,               // ordered list item prefix
+  "MD030": false,               // list marker spacing variations
+  "MD031": false,               // blanks around fences (VitePress code blocks)
+  "MD032": false,               // blanks around lists (dense formatting)
+  "MD036": false,               // no emphasis as heading (intentional styling)
+  "MD040": false,               // fenced code language (some output blocks)
+  "MD047": false                // single trailing newline (some generated files)
+}

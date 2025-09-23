@@ -1,0 +1,40 @@
+name: Docs Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Markdownlint
+        run: |
+          npm i -g markdownlint-cli
+          markdownlint -c .markdownlint.jsonc "docs/**/*.md"
+
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lychee link checker
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: >-
+            --no-progress --timeout 20 --max-concurrency 4
+            --accept 200,206,429
+            docs/**/*.md
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  vale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vale
+        uses: errata-ai/vale-action@v2
+        with:
+          files: docs
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

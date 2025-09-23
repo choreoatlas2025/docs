@@ -1,0 +1,12 @@
+extends: substitution
+message: "Prefer '%s' over '%s'."
+level: warning
+ignorecase: true
+swap:
+  "Pro Free": "Pro Standard"
+  "Professional Edition": "Pro Standard"
+  "Pro Privacy Edition": "Pro Privacy"
+  "Community Edition": "CE"
+  "community edition": "CE"
+  "Cloud Edition": "Cloud"
+
