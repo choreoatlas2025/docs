@@ -9,5 +9,10 @@
   "MD025": false,               // multiple top-level headings (some landing pages)
   "MD026": false,               // punctuation in headings (em dash, etc.)
   "MD029": false,               // ordered list item prefix
-  "MD030": false                // list marker spacing variations
+  "MD030": false,               // list marker spacing variations
+  "MD031": false,               // blanks around fences (VitePress code blocks)
+  "MD032": false,               // blanks around lists (dense formatting)
+  "MD036": false,               // no emphasis as heading (intentional styling)
+  "MD040": false,               // fenced code language (some output blocks)
+  "MD047": false                // single trailing newline (some generated files)
 }
