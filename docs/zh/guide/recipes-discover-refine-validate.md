@@ -44,4 +44,3 @@ choreoatlas ci-gate \
 ```
 
 建议将 HTML/JUnit 报告作为构建工件上传。
-

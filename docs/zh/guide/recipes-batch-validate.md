@@ -29,7 +29,6 @@ done
 ```
 
 建议：同时产出 HTML 与 JUnit；校验失败不影响批量流程（`|| true`），最终统一判定。
-
 ## 聚合门禁
 
 ```bash
@@ -48,4 +47,3 @@ exit $FAIL
 find traces -name '*.trace.json' | parallel -j4 \
   'choreoatlas validate --flow contracts/flows/order-flow.graph.flowspec.yaml --trace {}'
 ```
-

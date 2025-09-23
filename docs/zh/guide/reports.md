@@ -83,4 +83,3 @@ JSON 报告中的 `gateResult`（含 `code` 与 `reason`）用于显式驱动 CI
 - CI 中同时产出 HTML 与 JUnit：HTML 用于人工核查，JUnit 供看板统计。
 - 报告作为构建工件保留 14–30 天。
 - 用阈值防回退，用基线抑噪声。
-

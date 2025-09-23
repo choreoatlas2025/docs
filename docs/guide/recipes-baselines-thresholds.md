@@ -50,4 +50,3 @@ choreoatlas validate ... --baseline-missing treat-as-absolute
 
 - Store baselines under `baselines/<flow>.json` and review changes like code.
 - Combine thresholds with baselines: threshold catches regressions; baseline stabilizes noise.
-

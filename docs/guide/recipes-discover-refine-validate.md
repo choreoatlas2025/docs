@@ -48,4 +48,3 @@ choreoatlas ci-gate \
 ```
 
 Artifacts: upload `reports/validation-report.html` and/or `reports/validation.junit.xml`.
-

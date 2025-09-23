@@ -55,4 +55,3 @@ find traces -name '*.trace.json' | parallel -j4 \
 ```
 
 Adjust `-j` to your CI runner capacity.
-

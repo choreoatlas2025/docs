@@ -87,4 +87,3 @@ The JSON report embeds a `gateResult` with `code` and `reason` to make CI decisi
 - Produce both HTML and JUnit in CI: HTML for manual inspection, JUnit for dashboards.
 - Keep reports as build artifacts for 14–30 days.
 - Use thresholds to prevent regressions; baselines to stabilize noise.
-

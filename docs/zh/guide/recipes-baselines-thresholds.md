@@ -48,4 +48,3 @@ choreoatlas validate ... --baseline-missing treat-as-absolute
 
 - 基线文件纳入版本库（`baselines/<flow>.json`），按变更评审。
 - 阈值 + 基线组合：阈值防回退，基线抑制抖动。
-
