@@ -12,7 +12,7 @@ jobs:
       - name: Markdownlint
         run: |
           npm i -g markdownlint-cli
-          markdownlint "docs/**/*.md"
+          markdownlint -c .markdownlint.jsonc "docs/**/*.md"
 
   linkcheck:
     runs-on: ubuntu-latest
@@ -38,4 +38,3 @@ jobs:
           files: docs
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
