@@ -3,6 +3,9 @@
 [![Deploy to GitHub Pages](https://github.com/choreoatlas2025/docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/choreoatlas2025/docs/actions/workflows/deploy.yml)
 [![Build and Push Docker Image](https://github.com/choreoatlas2025/docs/actions/workflows/docker-build.yml/badge.svg)](https://github.com/choreoatlas2025/docs/actions/workflows/docker-build.yml)
 
+[![Website](https://img.shields.io/badge/website-choreoatlas.com-0b72e7?logo=firefox-browser&logoColor=white)](https://choreoatlas.com)
+[![Docs](https://img.shields.io/badge/docs-choreoatlas.io-0b72e7?logo=readthedocs&logoColor=white)](https://choreoatlas.io)
+
 **ChoreoAtlas CLI Documentation Site - Built with VitePress**
 
 🌐 **Live Site**: [https://choreoatlas.io](https://choreoatlas.io)
