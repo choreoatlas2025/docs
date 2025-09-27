@@ -23,6 +23,7 @@ export default defineConfig({
               { text: 'GitHub Repository', link: 'https://github.com/choreoatlas2025/cli' },
               { text: 'Quickstart Demo', link: 'https://github.com/choreoatlas2025/quickstart-demo' },
               { text: 'Docker Hub', link: 'https://hub.docker.com/u/choreoatlas' },
+              { text: 'Whitepaper', link: 'https://github.com/choreoatlas2025/whitepaper' },
               { text: 'Business Website', link: 'https://choreoatlas.com' }
             ]
           }
@@ -70,6 +71,7 @@ export default defineConfig({
               { text: 'GitHub 仓库', link: 'https://github.com/choreoatlas2025/cli' },
               { text: '快速演示', link: 'https://github.com/choreoatlas2025/quickstart-demo' },
               { text: 'Docker Hub', link: 'https://hub.docker.com/u/choreoatlas' },
+              { text: '白皮书', link: 'https://github.com/choreoatlas2025/whitepaper' },
               { text: '商务网站', link: 'https://choreoatlas.com' }
             ]
           }
