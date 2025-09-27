@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "vitepress build docs && node ./scripts/gen-feed.mjs",
     "docs:preview": "vitepress preview docs",
     "docs:lint:links": "node ./scripts/check-links.mjs",
-    "docs:gen:cli": "node ./scripts/gen-cli-reference.mjs"
+    "docs:gen:cli": "node ./scripts/gen-cli-reference.mjs",
+    "docs:gen:feed": "node ./scripts/gen-feed.mjs"
   },
   "keywords": [],
   "author": "",

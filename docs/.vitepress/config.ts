@@ -3,6 +3,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'ChoreoAtlas CLI',
   description: 'Map, Verify, Steer cross-service choreography with contracts-as-code',
+  sitemap: {
+    hostname: 'https://choreoatlas.io'
+  },
   
   // 多语言配置
   locales: {
@@ -129,17 +132,56 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   ignoreDeadLinks: true,
+  transformHead: ({ page, pageData, siteConfig }) => {
+    const hostname = 'https://choreoatlas.io'
+    const base = siteConfig.base || '/'
+    // Build pretty URL from source path (respecting cleanUrls)
+    const pretty = pageData.relativePath
+      .replace(/(^|\/)index\.md$/, '$1')
+      .replace(/\.md$/, '/')
+    const canonical = hostname + (base.endsWith('/') ? base : base + '/') + pretty
+    const techArticle = {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: pageData.title || 'ChoreoAtlas Docs',
+      dateModified: pageData.lastUpdated ? new Date(pageData.lastUpdated).toISOString() : new Date().toISOString(),
+      author: { '@type': 'Organization', name: 'ChoreoAtlas' },
+      mainEntityOfPage: canonical
+    }
+    return [
+      ['link', { rel: 'canonical', href: canonical }],
+      ['script', { type: 'application/ld+json' }, JSON.stringify(techArticle)]
+    ]
+  },
   
   // 头部配置
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'ChoreoAtlas Docs', href: '/docs/feed.xml' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
     ['meta', { name: 'x-build', content: process.env.GITHUB_SHA?.slice(0,7) || 'local' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:locale', content: 'en' }],
     ['meta', { name: 'og:title', content: 'ChoreoAtlas CLI | Contract-as-Code Orchestration' }],
     ['meta', { name: 'og:site_name', content: 'ChoreoAtlas CLI' }],
-    ['meta', { name: 'og:image', content: 'https://choreoatlas.io/choreoatlas-social-card.jpg' }],
-    ['meta', { name: 'og:url', content: 'https://choreoatlas.io/' }]
+    ['meta', { name: 'og:description', content: 'CLI and docs for trace-driven, contracts-as-code choreography governance.' }],
+    ['meta', { name: 'og:image', content: 'https://choreoatlas.com/favicon.ico' }],
+    ['meta', { name: 'og:url', content: 'https://choreoatlas.io/' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: '@choreoatlas' }],
+    ['script', { type: 'application/ld+json' }, JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'ChoreoAtlas',
+      url: 'https://choreoatlas.io',
+      sameAs: ['https://github.com/choreoatlas2025', 'https://hub.docker.com/u/choreoatlas']
+    })],
+    ['script', { type: 'application/ld+json' }, JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      url: 'https://choreoatlas.io/',
+      name: 'ChoreoAtlas CLI Docs',
+      inLanguage: 'en'
+    })]
   ]
 })
