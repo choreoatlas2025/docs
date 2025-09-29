@@ -58,12 +58,13 @@ OTLP spans keep `startTimeUnixNano`/`endTimeUnixNano` values and are mapped dire
 
 ## Validation after conversion
 
-Always run lint + validate after conversion to confirm the trace matches your FlowSpec:
+Always run convert (if DAG) → lint → validate to confirm the trace matches your FlowSpec. CE defaults to flow format:
 
 ```bash
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
-choreoatlas validate \
-  --flow contracts/flows/order-flow.graph.flowspec.yaml \
+choreoatlas spec convert --in contracts/flows/order-flow.graph.flowspec.yaml --to flow --out contracts/flows/order-flow.flowspec.yaml
+choreoatlas spec lint --flow contracts/flows/order-flow.flowspec.yaml
+choreoatlas run validate \
+  --flow contracts/flows/order-flow.flowspec.yaml \
   --trace traces/successful-order.trace.json
 ```
 

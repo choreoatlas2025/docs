@@ -25,17 +25,17 @@ jobs:
             --flow contracts/flows/order-flow.graph.flowspec.yaml \
             --trace traces/successful-order.trace.json
 
-      - name: Generate reports
+      - name: Generate reports + Step Summary
         run: |
           source $BASH_ENV
-          choreoatlas validate \
-            --flow contracts/flows/order-flow.graph.flowspec.yaml \
+          choreoatlas run validate \
+            --flow contracts/flows/order-flow.flowspec.yaml \
             --trace traces/successful-order.trace.json \
-            --report-format junit --report-out reports/junit.xml
-          choreoatlas validate \
-            --flow contracts/flows/order-flow.graph.flowspec.yaml \
+            --report-format junit --report-out reports/junit.xml --summary
+          choreoatlas run validate \
+            --flow contracts/flows/order-flow.flowspec.yaml \
             --trace traces/successful-order.trace.json \
-            --report-format html --report-out reports/report.html
+            --report-format html --report-out reports/report.html --summary
 
       - uses: actions/upload-artifact@v4
         with:

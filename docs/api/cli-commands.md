@@ -1,4 +1,4 @@
-# CLI Commands Reference
+# CLI Commands Reference (CE)
 
 ::: warning Beta Version
 ChoreoAtlas CLI is currently in **Beta** status. Commands and options may change as we refine the interface.
@@ -11,12 +11,24 @@ ChoreoAtlas CLI is currently in **Beta** status. Commands and options may change
 --version      Print version information
 ```
 
-## `choreoatlas discover`
+## Domains and Aliases
+
+Top-level domains and their meanings:
+
+```
+spec        # Contracts: discover | lint | validate | convert
+run         # Runtime:   validate
+system      # Utilities: version
+```
+
+Common aliases (equivalent): `lint` ≙ `spec lint`, `validate` ≙ `run validate`, `discover` ≙ `spec discover`.
+
+## `choreoatlas spec discover`
 
 Generate FlowSpec and ServiceSpec contracts directly from a trace file.
 
 ```bash
-choreoatlas discover [options]
+choreoatlas spec discover [options]
 ```
 
 **Options**
@@ -26,20 +38,45 @@ choreoatlas discover [options]
 --out string           Output path for the FlowSpec file (default `discovered.flowspec.yaml`)
 --out-services string  Directory for generated ServiceSpec files (default `./services`)
 --title string         FlowSpec title (optional)
+--emit-graph          Emit graph(DAG) format (CE defaults to flow; placeholder)
 ```
 
 **Example**
 
 ```bash
-choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
+choreoatlas spec discover \
+  --trace traces/successful-order.trace.json \
+  --out contracts/flows/order-flow.discovered.flowspec.yaml \
+  --out-services contracts/services.discovered
 ```
 
-## `choreoatlas validate`
+Notes:
+- CE keeps FlowSpec.input clean (no `otel.*`/`http.*`/`span.*`). Telemetry is mapped into ServiceSpec pre/postconditions.
+- Operation IDs are normalized from HTTP/RPC span info for stability.
+
+## `choreoatlas spec convert`
+
+Convert a DAG (graph) FlowSpec to sequential flow (CE default representation).
+
+```bash
+choreoatlas spec convert --in <input.flowspec.yaml> --to flow --out <output.flowspec.yaml>
+```
+
+Example:
+
+```bash
+choreoatlas spec convert \
+  --in examples/flows/order-fulfillment-dag.flowspec.yaml \
+  --to flow \
+  --out converted.flow.yaml
+```
+
+## `choreoatlas run validate`
 
 Validate an orchestration against a trace and optionally emit reports.
 
 ```bash
-choreoatlas validate [options]
+choreoatlas run validate [options]
 ```
 
 **Options**
@@ -57,16 +94,23 @@ choreoatlas validate [options]
 --skip-as-fail              Treat SKIP conditions as failures
 --report-format string      Report format: `html`, `json`, or `junit`
 --report-out string         Output file for the report (required when `--report-format` is set)
+--summary                   Write GitHub Step Summary when `GITHUB_STEP_SUMMARY` is present
 ```
 
 **Examples**
 
 ```bash
 # Basic validation with an HTML report
-choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
+choreoatlas run validate \
+  --flow contracts/flows/order-flow.flowspec.yaml \
+  --trace traces/successful-order.trace.json \
+  --report-format html --report-out reports/validation-report.html --summary
 
 # Enforce strict coverage thresholds
-choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --threshold-steps 1.0 --threshold-conds 1.0 --skip-as-fail
+choreoatlas run validate \
+  --flow contracts/flows/order-flow.flowspec.yaml \
+  --trace traces/successful-order.trace.json \
+  --threshold-steps 1.0 --threshold-conds 1.0 --skip-as-fail
 ```
 
 ## `choreoatlas lint`
@@ -87,7 +131,7 @@ choreoatlas lint [options]
 **Example**
 
 ```bash
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+choreoatlas spec lint --flow contracts/flows/order-flow.flowspec.yaml
 ```
 
 ## `choreoatlas ci-gate`
@@ -108,7 +152,9 @@ choreoatlas ci-gate [options]
 **Example**
 
 ```bash
-choreoatlas ci-gate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json
+choreoatlas ci-gate \
+  --flow contracts/flows/order-flow.flowspec.yaml \
+  --trace traces/successful-order.trace.json
 ```
 
 ## `choreoatlas version`
