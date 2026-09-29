@@ -88,6 +88,5 @@ Open the HTML report locally (for example `open reports/validation-report.html` 
 
 - **CI Integration:** automate lint + validate + report in your pipelines ([guide/ci-integration](/guide/ci-integration)).
 - **Trace Conversion:** convert Jaeger/OTLP traces into the CE internal format ([guide/trace-conversion](/guide/trace-conversion)).
-- **Troubleshooting:** common validation errors and fixes ([guide/troubleshooting](/guide/troubleshooting)).
 
 You are now ready to apply ChoreoAtlas CLI to your own traces or extend the quickstart demo.

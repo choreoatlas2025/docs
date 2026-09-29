@@ -3,12 +3,12 @@
 [![Deploy to GitHub Pages](https://github.com/choreoatlas2025/docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/choreoatlas2025/docs/actions/workflows/deploy.yml)
 [![Build and Push Docker Image](https://github.com/choreoatlas2025/docs/actions/workflows/docker-build.yml/badge.svg)](https://github.com/choreoatlas2025/docs/actions/workflows/docker-build.yml)
 
-[![Website](https://img.shields.io/badge/website-choreoatlas.com-0b72e7?logo=firefox-browser&logoColor=white)](https://choreoatlas.com)
-[![Docs](https://img.shields.io/badge/docs-choreoatlas.io-0b72e7?logo=readthedocs&logoColor=white)](https://choreoatlas.io)
+[![Website](https://img.shields.io/badge/website-cq365.eu.org-0b72e7?logo=firefox-browser&logoColor=white)](https://cq365.eu.org/)
+[![Docs](https://img.shields.io/badge/docs-cq365.eu.org%2Fdocs-0b72e7?logo=readthedocs&logoColor=white)](https://cq365.eu.org/docs/)
 
 **ChoreoAtlas CLI Documentation Site - Built with VitePress**
 
-🌐 **Live Site**: [https://choreoatlas.io](https://choreoatlas.io)
+🌐 **Live Site**: [https://cq365.eu.org/docs/](https://cq365.eu.org/docs/)
 
 ## 🏗️ Architecture
 
@@ -120,11 +120,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔗 Related Links
 
 - **[ChoreoAtlas CLI](https://github.com/choreoatlas2025/cli)** - Main CLI repository
-- **[Business Website](https://choreoatlas.com)** - Commercial site
+- **[Project resources](https://cq365.eu.org/)** - Current public resource index
 - **[Docker Hub](https://hub.docker.com/u/choreoatlas)** - Container images
 
 ---
 
-📚 **Documentation**: [https://choreoatlas.io](https://choreoatlas.io)
+📚 **Documentation**: [https://cq365.eu.org/docs/](https://cq365.eu.org/docs/)
 🐛 **Issues**: [GitHub Issues](https://github.com/choreoatlas2025/docs/issues)
 💬 **Discussions**: [GitHub Discussions](https://github.com/choreoatlas2025/docs/discussions)

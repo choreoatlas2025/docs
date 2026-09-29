@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const root = path.resolve(__dirname, '..')
 const docsDir = path.join(root, 'docs')
-const baseUrl = 'https://choreoatlas.io/docs/'
+const baseUrl = 'https://cq365.eu.org/docs/'
 
 function walk(dir) {
   const out = []
@@ -40,7 +40,7 @@ function toUrl(rel) {
   let p = rel.replace(/\\/g, '/')
   p = p.replace(/^docs\//, '')
   p = p.replace(/(^|\/)index\.md$/, '$1')
-  p = p.replace(/\.md$/, '/')
+  p = p.replace(/\.md$/, '')
   return baseUrl + p
 }
 
@@ -69,4 +69,3 @@ function generate() {
 }
 
 generate()
-

@@ -4,7 +4,7 @@ export default defineConfig({
   title: 'ChoreoAtlas CLI',
   description: 'Map, Verify, Steer cross-service choreography with contracts-as-code',
   sitemap: {
-    hostname: 'https://choreoatlas.io'
+    hostname: 'https://cq365.eu.org/docs/'
   },
   
   // 多语言配置
@@ -24,7 +24,7 @@ export default defineConfig({
               { text: 'Quickstart Demo', link: 'https://github.com/choreoatlas2025/quickstart-demo' },
               { text: 'Docker Hub', link: 'https://hub.docker.com/u/choreoatlas' },
               { text: 'Whitepaper', link: 'https://github.com/choreoatlas2025/whitepaper' },
-              { text: 'Business Website', link: 'https://choreoatlas.com' }
+              { text: 'Project resources', link: 'https://cq365.eu.org/' }
             ]
           }
         ],
@@ -72,7 +72,7 @@ export default defineConfig({
               { text: '快速演示', link: 'https://github.com/choreoatlas2025/quickstart-demo' },
               { text: 'Docker Hub', link: 'https://hub.docker.com/u/choreoatlas' },
               { text: '白皮书', link: 'https://github.com/choreoatlas2025/whitepaper' },
-              { text: '商务网站', link: 'https://choreoatlas.com' }
+              { text: '项目资源', link: 'https://cq365.eu.org/' }
             ]
           }
         ],
@@ -134,14 +134,12 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   ignoreDeadLinks: true,
-  transformHead: ({ page, pageData, siteConfig }) => {
-    const hostname = 'https://choreoatlas.io'
-    const base = siteConfig.base || '/'
+  transformHead: ({ pageData }) => {
     // Build pretty URL from source path (respecting cleanUrls)
     const pretty = pageData.relativePath
       .replace(/(^|\/)index\.md$/, '$1')
-      .replace(/\.md$/, '/')
-    const canonical = hostname + (base.endsWith('/') ? base : base + '/') + pretty
+      .replace(/\.md$/, '')
+    const canonical = 'https://cq365.eu.org/docs/' + pretty
     const techArticle = {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
@@ -152,6 +150,7 @@ export default defineConfig({
     }
     return [
       ['link', { rel: 'canonical', href: canonical }],
+      ['meta', { name: 'og:url', content: canonical }],
       ['script', { type: 'application/ld+json' }, JSON.stringify(techArticle)]
     ]
   },
@@ -167,21 +166,19 @@ export default defineConfig({
     ['meta', { name: 'og:title', content: 'ChoreoAtlas CLI | Contract-as-Code Orchestration' }],
     ['meta', { name: 'og:site_name', content: 'ChoreoAtlas CLI' }],
     ['meta', { name: 'og:description', content: 'CLI and docs for trace-driven, contracts-as-code choreography governance.' }],
-    ['meta', { name: 'og:image', content: 'https://choreoatlas.com/favicon.ico' }],
-    ['meta', { name: 'og:url', content: 'https://choreoatlas.io/' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@choreoatlas' }],
     ['script', { type: 'application/ld+json' }, JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'ChoreoAtlas',
-      url: 'https://choreoatlas.io',
+      url: 'https://cq365.eu.org/',
       sameAs: ['https://github.com/choreoatlas2025', 'https://hub.docker.com/u/choreoatlas']
     })],
     ['script', { type: 'application/ld+json' }, JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      url: 'https://choreoatlas.io/',
+      url: 'https://cq365.eu.org/docs/',
       name: 'ChoreoAtlas CLI Docs',
       inLanguage: 'en'
     })]

@@ -92,6 +92,5 @@ choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   -
 
 - **CI 集成**：在流水线中自动完成 lint + validate + 报告（参考 [CI 集成指南](/zh/guide/ci-integration)）。
 - **追踪转换**：将 Jaeger/OTLP 追踪转换为 CE 内部格式（参考 [追踪转换说明](/zh/guide/trace-conversion)）。
-- **常见问题**：排查校验失败的常见原因（参考 [Troubleshooting](/zh/guide/troubleshooting)）。
 
 完成以上步骤后，您已经掌握 ChoreoAtlas CLI 的完整闭环，可以开始针对自己的追踪数据进行契约治理。
