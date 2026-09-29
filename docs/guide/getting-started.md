@@ -8,7 +8,7 @@ This guide shows how to go from trace data to validated reports in minutes. You 
 
 ## Prerequisites
 
-- Docker **or** the ChoreoAtlas binary (v0.7.0+)
+- Docker **or** the ChoreoAtlas CE binary (v0.2.0-ce.beta.1)
 - Git (to clone the quickstart demo)
 - Familiarity with basic shell commands
 
@@ -24,7 +24,7 @@ The repository includes sample FlowSpec/ServiceSpec files and traces under `cont
 ## Step 1 – Create a one-line alias
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 ```
 
 > Prefer installers? Download binaries from [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) instead of using Docker.

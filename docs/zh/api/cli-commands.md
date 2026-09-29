@@ -196,7 +196,7 @@ export CHOREOATLAS_DEBUG=true
 #!/usr/bin/env bash
 set -euo pipefail
 
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 
 choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 

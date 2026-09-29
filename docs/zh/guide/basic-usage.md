@@ -13,7 +13,7 @@ ChoreoAtlas CLI 仍在 **Beta** 阶段，命令与参数可能调整。
 ## 别名回顾
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 ```
 
 通过 Docker 别名始终使用最新 CLI，无需本地安装。
@@ -54,7 +54,7 @@ choreoatlas discover   --trace traces/successful-order.trace.json   --out contra
 #!/usr/bin/env bash
 set -euo pipefail
 
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 
 choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 

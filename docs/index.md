@@ -36,8 +36,8 @@ layout: page
   </div>
   <div class="feature-card">
     <div class="feature-icon">📋</div>
-    <h3>Multiple Editions</h3>
-    <p>Community Edition (CE), Pro Standard, Pro Privacy, and Cloud to fit different team and governance needs.</p>
+    <h3>Open Source Community Edition</h3>
+    <p>Use the published CE beta to discover, lint, and validate contracts locally.</p>
   </div>
 </div>
 
@@ -99,7 +99,7 @@ ChoreoAtlas CLI is currently in **Beta** status. Features and APIs may change as
 
 ```bash
 # 1) One-line alias (no local install)
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 
 # 2) Validate a sample flow and emit an HTML report
 choreoatlas validate \
@@ -116,34 +116,9 @@ Tips
 - Use the [quickstart demo](https://github.com/choreoatlas2025/quickstart-demo) for a ready-to-run workspace (`git clone … && make demo`).
 - Continue with [Getting Started](/guide/getting-started) for the full discover → lint → validate workflow.
 
-## Supported Editions
+## Available Release
 
-::: info Community Edition (CE)
-Free and Open Source
-- ServiceSpec + FlowSpec contracts, local validation and linting
-- Reports: HTML/JSON/JUnit; basic baselines and CI gating
-- Zero telemetry, runs fully offline
-:::
-
-::: tip Pro Standard
-Team features with opt‑in anonymous telemetry
-- Everything in CE plus advanced baselines, history diff, trend analysis
-- Org‑level policies, private rules/templates, notifications/Webhooks
-- GitHub App style PR summaries and failure deep‑links
-:::
-
-::: tip Pro Privacy
-Fully offline Pro for regulated environments
-- All Pro Standard features with zero telemetry and no network egress
-- Offline license activation; reproducible builds guidance
-:::
-
-::: warning Cloud
-Managed workspace and collaboration
-- Web console, teams/projects, hosted reports and history
-- Connectors (OTLP/Jaeger/Tempo), continuous discovery and drift detection
-- SSO/RBAC, audit/export, retention policies, API/SDK
-:::
+The published CLI release is [Community Edition 0.2.0-ce.beta.1](https://github.com/choreoatlas2025/cli/releases/tag/v0.2.0-ce.beta.1). Its binaries and Docker image support local contract discovery, linting, validation, and reports. Pro and Cloud offerings are not presented as available releases here.
 
 ---
 

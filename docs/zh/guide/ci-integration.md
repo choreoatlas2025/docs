@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: 通过 Docker 创建别名
-        run: echo "alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'" >> $BASH_ENV
+        run: echo "alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'" >> $BASH_ENV
 
       - name: CI gate（lint + validate）
         run: |

@@ -77,22 +77,9 @@ ChoreoAtlas works with real execution data:
 - **Production Data**: Validate against real user behavior
 - **Privacy-First**: Built-in PII masking and data protection
 
-### Multi-Edition Approach
+### Published Release
 
-**Community Edition (CE)**
-- Complete dual-contract validation
-- Local execution with zero data collection
-- Perfect for individual developers and small teams
-
-**Professional Edition (Pro)**  
-- Advanced baselines and trend analysis
-- Team collaboration and governance features
-- Enterprise integrations and notifications
-
-**Cloud Edition**
-- Managed service with web console
-- Continuous monitoring and drift detection
-- Enterprise security and compliance features
+The public [Community Edition 0.2.0-ce.beta.1](https://github.com/choreoatlas2025/cli/releases/tag/v0.2.0-ce.beta.1) runs locally against traces and contracts. Check the release notes for its supported commands and formats.
 
 ## When to Use ChoreoAtlas
 
@@ -120,7 +107,6 @@ ChoreoAtlas is built with modern software engineering principles:
 - **Go-based CLI** for performance and portability
 - **JSON Schema validation** for contract structure  
 - **CEL expressions** for semantic validation rules
-- **Modular architecture** supporting multiple editions and deployment models
 - **Docker-first** deployment with multi-platform support
 
 Continue to [Getting Started](./getting-started.md) to begin your journey with contract-as-code orchestration!

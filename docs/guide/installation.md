@@ -9,7 +9,7 @@ Choose one of the following installation methods.
 ## Option 1 – Docker alias (recommended)
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 ```
 
 - No binaries to install or update manually

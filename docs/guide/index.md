@@ -46,11 +46,9 @@ Contract validation works with real execution traces from production systems, en
 - Detects service reference errors and variable dependencies  
 - Provides guidance for contract improvements
 
-## Supported Editions
+## Available Release
 
-- **Community Edition (CE)**: Completely free, suitable for individual developers and small teams
-- **Professional Edition (Pro)**: Enterprise features including advanced baselines and team collaboration  
-- **Cloud Edition (Cloud)**: Managed service with web console and continuous monitoring
+[Community Edition 0.2.0-ce.beta.1](https://github.com/choreoatlas2025/cli/releases/tag/v0.2.0-ce.beta.1) is the published beta release. Use the quickstart demo to try its local CLI workflow.
 
 ## Getting Started
 

@@ -13,7 +13,7 @@ ChoreoAtlas CLI 仍处于 **Beta** 阶段，安装方式后续可能调整。
 ## 方式一：Docker 一行别名（推荐）
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 ```
 
 - 无需安装或升级本地二进制

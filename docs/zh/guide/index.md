@@ -31,15 +31,13 @@ ChoreoAtlas 实现双契约架构，为微服务编排提供语义验证和时�
 ## 快速开始
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 
 choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml \
   --trace traces/successful-order.trace.json \
   --report-format html --report-out reports/validation-report.html
 ```
 
-## 支持的版本
+## 当前可用版本
 
-- **社区版 (CE)**: 完全免费，适合个人开发者和小团队
-- **专业版 (Pro)**: 企业级功能，包含高级基线和团队协作
-- **云端版 (Cloud)**: 托管服务，提供 Web 控制台和持续监控
+[社区版 0.2.0-ce.beta.1](https://github.com/choreoatlas2025/cli/releases/tag/v0.2.0-ce.beta.1) 是已发布的测试版，可通过演示仓库体验本地 CLI 工作流。

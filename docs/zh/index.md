@@ -36,8 +36,8 @@ layout: page
   </div>
   <div class="feature-card">
     <div class="feature-icon">📋</div>
-    <h3>多版本支持</h3>
-    <p>社区版（CE）、Pro 标准版、Pro 隐私版与云端版，覆盖不同团队与治理需求。</p>
+    <h3>开源社区版</h3>
+    <p>使用已发布的 CE 测试版，在本地探索、检查和校验契约。</p>
   </div>
 </div>
 
@@ -81,7 +81,7 @@ ChoreoAtlas CLI 目前处于 **Beta** 状态。我们持续改进产品，功能
 
 ```bash
 # 1）一行别名（无需本地安装）
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 
 # 2）执行校验并生成 HTML 报告
 choreoatlas validate \
@@ -98,34 +98,9 @@ choreoatlas validate \
 - 使用 [quickstart-demo](https://github.com/choreoatlas2025/quickstart-demo) 获得开箱即用的环境（`git clone … && make demo`）。
 - 想了解完整流程，请继续阅读 [快速开始](/zh/guide/getting-started)，掌握探索 → 检查 → 校验的闭环。
 
-## 支持版本
+## 当前可用版本
 
-::: info 社区版 (CE)
-免费开源
-- ServiceSpec + FlowSpec 双契约，本地验证/检查
-- 报告：HTML/JSON/JUnit；基础基线与 CI 门禁
-- 零遥测，完全本地运行
-:::
-
-::: tip Pro 标准版 (Pro Standard)
-团队能力（匿名遥测可选）
-- 在 CE 基础上，提供高级基线、历史对比与趋势分析
-- 组织级策略、私有规则/模板库、通知与 Webhook
-- GitHub App 样式的 PR 摘要与失败溯源
-:::
-
-::: tip Pro 隐私版 (Pro Privacy)
-完全离线/不可外呼
-- 等同 Pro 标准版功能，零遥测、无任何网络外呼
-- 支持离线许可激活；可复现构建指引
-:::
-
-::: warning 云端版 (Cloud)
-托管工作区与协作
-- Web 控制台、团队/项目、报告托管与历史留存
-- 连接器（OTLP/Jaeger/Tempo），持续发现与漂移检测
-- SSO/RBAC、审计与导出、保留策略、API/SDK
-:::
+已发布的 CLI 版本是[社区版 0.2.0-ce.beta.1](https://github.com/choreoatlas2025/cli/releases/tag/v0.2.0-ce.beta.1)，提供二进制文件与 Docker 镜像，可在本地探索、检查和校验契约并生成报告。Pro 与 Cloud 暂无可核实的公开发行版。
 
 ---
 

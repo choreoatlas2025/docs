@@ -11,7 +11,7 @@ This page summarises the everyday commands you will run after completing the qui
 Use the Docker alias so you always run the latest CLI without local installation:
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 ```
 
 ## Lint a FlowSpec
@@ -51,7 +51,7 @@ Review the generated files, keep what you need, and iterate on the specs.
 #!/usr/bin/env bash
 set -euo pipefail
 
-alias choreoatlas='docker run --rm -v $(pwd):/workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
 
 choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 
