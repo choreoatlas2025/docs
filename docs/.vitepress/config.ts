@@ -109,8 +109,6 @@ export default defineConfig({
 
   // 全局主题配置
   themeConfig: {
-    logo: '/logo.svg',
-    
     socialLinks: [
       { icon: 'github', link: 'https://github.com/choreoatlas2025/cli' }
     ],
@@ -157,7 +155,6 @@ export default defineConfig({
   
   // 头部配置
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'ChoreoAtlas Docs', href: '/docs/feed.xml' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
     ['meta', { name: 'x-build', content: process.env.GITHUB_SHA?.slice(0,7) || 'local' }],
@@ -166,7 +163,7 @@ export default defineConfig({
     ['meta', { name: 'og:title', content: 'ChoreoAtlas CLI | Contract-as-Code Orchestration' }],
     ['meta', { name: 'og:site_name', content: 'ChoreoAtlas CLI' }],
     ['meta', { name: 'og:description', content: 'CLI and docs for trace-driven, contracts-as-code choreography governance.' }],
-    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
     ['meta', { name: 'twitter:site', content: '@choreoatlas' }],
     ['script', { type: 'application/ld+json' }, JSON.stringify({
       '@context': 'https://schema.org',
