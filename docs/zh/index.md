@@ -81,7 +81,7 @@ ChoreoAtlas CLI 目前处于 **Beta** 状态。我们持续改进产品，功能
 
 ```bash
 # 1）一行别名（无需本地安装）
-alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 
 # 2）执行校验并生成 HTML 报告
 choreoatlas validate \

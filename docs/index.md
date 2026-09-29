@@ -99,7 +99,7 @@ ChoreoAtlas CLI is currently in **Beta** status. Features and APIs may change as
 
 ```bash
 # 1) One-line alias (no local install)
-alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 
 # 2) Validate a sample flow and emit an HTML report
 choreoatlas validate \

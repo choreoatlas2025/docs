@@ -28,7 +28,7 @@ cd quickstart-demo
 ## 第 1 步：设置一行别名
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 ```
 
 > 如果希望本地安装，可以从 [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) 下载对应平台的二进制。

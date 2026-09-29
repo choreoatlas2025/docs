@@ -31,7 +31,7 @@ ChoreoAtlas 实现双契约架构，为微服务编排提供语义验证和时�
 ## 快速开始
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 
 choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml \
   --trace traces/successful-order.trace.json \

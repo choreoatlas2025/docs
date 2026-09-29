@@ -24,7 +24,7 @@ The repository includes sample FlowSpec/ServiceSpec files and traces under `cont
 ## Step 1 – Create a one-line alias
 
 ```bash
-alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 ```
 
 > Prefer installers? Download binaries from [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) instead of using Docker.

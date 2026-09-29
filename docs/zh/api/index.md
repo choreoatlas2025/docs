@@ -17,7 +17,7 @@ ChoreoAtlas CLI 目前处于 **Beta** 状态，API 和命令接口后续可能�
 
 ```bash
 # 可选：一行别名（免安装）
-alias choreoatlas='docker run --rm -v $(pwd):/workspace -w /workspace choreoatlas/cli:latest'
+alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 
 # 从追踪生成契约（FlowSpec + ServiceSpec）
 choreoatlas discover --trace <trace.json>   --out <flowspec.yaml>   --out-services <dir>
