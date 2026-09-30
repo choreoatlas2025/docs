@@ -96,7 +96,7 @@ choreoatlas validate \
 
 提示
 - 使用 [quickstart-demo](https://github.com/choreoatlas2025/quickstart-demo) 获得开箱即用的环境（`git clone … && make demo`）。
-- 想了解完整流程，请继续阅读 [快速开始](/zh/guide/getting-started)，掌握探索 → 检查 → 校验的闭环。
+- 继续阅读 [快速开始](/zh/guide/getting-started)，生成并检查两份真实示例报告。
 
 ## 当前可用版本
 

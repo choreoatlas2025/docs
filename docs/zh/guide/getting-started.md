@@ -8,24 +8,27 @@ sidebar_position: 3
 ChoreoAtlas CLI 当前处于 **Beta** 状态，功能和 API 后续可能调整。
 :::
 
-本指南会手把手演示：从追踪数据生成契约、执行校验、产出报告，仅需几分钟即可跑通完整流程。
+本指南使用已发布的 CE Beta 和两份预录示例追踪，生成一份通过报告与一份预期失败报告。先看实际结果，再决定是否用于自己的系统。
 
 ## 前置条件
 
-- Docker 或 ChoreoAtlas 二进制（建议使用官方镜像）
+- Docker 和 Make
 - Git（用于克隆 quickstart 仓库）
 - 基础命令行操作能力
 
-## 第 0 步：克隆 quickstart 演示仓库（推荐）
+## 运行已验证的示例
 
 ```bash
 git clone https://github.com/choreoatlas2025/quickstart-demo.git
 cd quickstart-demo
+make demo
 ```
 
-仓库内已准备好示例 FlowSpec / ServiceSpec / Trace 文件，可直接练习。
+仓库内包含示例 FlowSpec、ServiceSpec 与追踪文件。运行后打开 `reports/successful-order-report.html` 和 `reports/failed-payment-report.html`：前者的 5 个流程步骤通过，后者的支付失败会触发 Gate 失败。示例追踪缺少部分输入字段，因此有些前置条件显示为 `SKIP`；流程通过不代表所有条件都被检查。
 
-## 第 1 步：设置一行别名
+## 查看 CLI 命令
+
+如需在 `quickstart-demo` 目录手动运行命令，可在交互式终端设置别名：
 
 ```bash
 alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
@@ -33,46 +36,18 @@ alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace
 
 > 如果希望本地安装，可以从 [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) 下载对应平台的二进制。
 
-## 第 2 步：从追踪生成契约
+### 从追踪生成契约
 
 ```bash
 choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 ```
 
-输出示例：
-```
-🔍 Analyzing trace data...
-✅ Generated FlowSpec: contracts/flows/order-flow.discovered.flowspec.yaml
-✅ Generated ServiceSpecs under contracts/services.discovered/
-```
+可将生成文件与仓库内整理过的 `contracts/flows/order-flow.graph.flowspec.yaml` 对照。当前 Beta 随附的 lint schema 不接受这份图示例中的所有字段，因此本指南不将 lint 作为运行前提。
 
-查看生成的文件，决定使用自动生成版本，或保留仓库内已精修的 `contracts/flows/order-flow.graph.flowspec.yaml`。
-
-## 第 3 步：执行 Lint
-
-```bash
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
-```
-
-默认会做 JSON Schema 校验和结构检查，成功输出如下：
-```
-[SCHEMA] FlowSpec structure validation passed
-[SCHEMA] ServiceSpec structure validation passed
-Lint: OK
-```
-
-## 第 4 步：根据追踪执行校验
+### 根据追踪执行校验
 
 ```bash
 choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
-```
-
-可能的控制台输出：
-```
-[PASS] Create Order (orders.createOrder)
-[PASS] Authorize Payment (payment.authorizePayment)
-Report saved: reports/validation-report.html (format: html)
-Validate: OK
 ```
 
 如需 JSON 等结构化数据，可追加：
@@ -80,7 +55,7 @@ Validate: OK
 choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format json --report-out reports/validation-report.json
 ```
 
-## 第 5 步：查看结果
+## 查看结果
 
 - `reports/validation-report.html`：时间线、覆盖率、Gate 状态一目了然
 - `reports/validation-report.json`（可选）：结构化数据，方便自动化处理
@@ -90,7 +65,7 @@ choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   -
 
 ## 下一步
 
-- **CI 集成**：在流水线中自动完成 lint + validate + 报告（参考 [CI 集成指南](/zh/guide/ci-integration)）。
+- **CI 集成**：在流水线中运行相同的 `make demo` 命令（参考 [CI 集成指南](/zh/guide/ci-integration)）。
 - **追踪转换**：将 Jaeger/OTLP 追踪转换为 CE 内部格式（参考 [追踪转换说明](/zh/guide/trace-conversion)）。
 
-完成以上步骤后，您已经掌握 ChoreoAtlas CLI 的完整闭环，可以开始针对自己的追踪数据进行契约治理。
+可先在示例中核对 PASS、FAIL 和 SKIP，再尝试导入自己的追踪数据。

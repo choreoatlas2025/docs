@@ -1,6 +1,6 @@
 # CI Integration
 
-Automate contract linting and validation inside your pipelines. The example below uses GitHub Actions, but the same steps apply to Jenkins, GitLab CI, or any runner that can execute shell commands.
+The public quickstart repository runs its verified two-trace demo in GitHub Actions. Start with that exact workflow before adapting the files and commands to your own traces.
 
 ## GitHub Actions example
 
@@ -15,29 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Alias ChoreoAtlas via Docker
-        run: echo "alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'" >> $BASH_ENV
+      - name: Run public quickstart
+        run: make demo
 
-      - name: CI gate (lint + validate)
-        run: |
-          source $BASH_ENV
-          choreoatlas ci-gate \
-            --flow contracts/flows/order-flow.graph.flowspec.yaml \
-            --trace traces/successful-order.trace.json
-
-      - name: Generate reports + Step Summary
-        run: |
-          source $BASH_ENV
-          choreoatlas run validate \
-            --flow contracts/flows/order-flow.flowspec.yaml \
-            --trace traces/successful-order.trace.json \
-            --report-format junit --report-out reports/junit.xml --summary
-          choreoatlas run validate \
-            --flow contracts/flows/order-flow.flowspec.yaml \
-            --trace traces/successful-order.trace.json \
-            --report-format html --report-out reports/report.html --summary
-
-      - uses: actions/upload-artifact@v4
+      - name: Upload real CLI reports
+        uses: actions/upload-artifact@v4
         with:
           name: choreoatlas-reports
           path: reports/
@@ -45,14 +27,13 @@ jobs:
 
 ### Key points
 
-- The Docker alias ensures the CLI is always up to date without installing binaries on the runner.
-- `choreoatlas ci-gate` combines lint + validate and exits non-zero on failure (useful for PR checks).
-- Additional `choreoatlas validate` commands produce HTML/JUnit reports that can be uploaded as artifacts.
-- Customize thresholds or baselines with `--threshold-*` and `--baseline` flags.
+- This workflow belongs in the [quickstart-demo repository](https://github.com/choreoatlas2025/quickstart-demo), where `make demo` and the example files are present.
+- `make demo` invokes the pinned Community Edition beta image. It expects one passing trace and one failed payment trace, then saves both HTML reports.
+- When adapting the workflow to your own repository, replace the sample traces and inspect all `FAIL` and `SKIP` conditions before using a report as a release gate.
 
 ### Other CI platforms
 
-For other CI systems, run the same commands in your pipeline steps. Ensure the working directory contains:
+For other CI systems, run `make demo` from the quickstart repository. When adapting it, ensure the working directory contains:
 
 - `contracts/flows/*.flowspec.yaml`
 - `traces/*.trace.json`

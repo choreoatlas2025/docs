@@ -16,17 +16,15 @@ ChoreoAtlas CLI 仍在 **Beta** 阶段，命令与参数可能调整。
 alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
 ```
 
-通过 Docker 别名始终使用最新 CLI，无需本地安装。
+该别名固定使用 CE Beta 镜像，无需本地安装。
 
 ## Lint FlowSpec
 
 ```bash
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml --schema=false
 ```
 
-- 默认执行 JSON Schema 校验（可通过 `--schema=false` 跳过）
-- 检查步骤唯一性、依赖关系、变量引用
-- 同步校验引用的 ServiceSpec
+该命令跳过 JSON Schema，仅检查图结构。当前 Beta 随附的 schema 不接受 quickstart 图示例的全部字段，不能把上述命令当作完整的 schema 校验。已验证的两份报告请运行 [快速开始](/zh/guide/getting-started) 中的 `make demo`。
 
 ## 根据追踪执行校验
 
@@ -48,19 +46,10 @@ choreoatlas discover   --trace traces/successful-order.trace.json   --out contra
 
 生成后可人工审阅、保留或与已有契约对比。
 
-## 一次性脚本（示例）
+## 重现两份示例报告
 
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
-
-choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
-
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
-
-choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
+make demo
 ```
 
 ## 退出码（速查）

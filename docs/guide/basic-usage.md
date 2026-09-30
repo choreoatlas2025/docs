@@ -8,7 +8,7 @@ This page summarises the everyday commands you will run after completing the qui
 
 ## Alias recap
 
-Use the Docker alias so you always run the latest CLI without local installation:
+Use the pinned Docker beta image without a local installation:
 
 ```bash
 alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
@@ -17,13 +17,10 @@ alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace
 ## Lint a FlowSpec
 
 ```bash
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
+choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml --schema=false
 ```
 
-By default, lint performs:
-- JSON Schema validation (set `--schema=false` to skip)
-- Flow graph checks (unique steps, dependencies, variable resolution)
-- ServiceSpec schema validation for referenced services
+This command checks the graph structure but skips JSON Schema validation. The current beta's bundled schema does not accept every field in the quickstart's curated graph example. Do not treat this command as full schema validation. The [verified quickstart](/guide/getting-started) uses `make demo` to generate actual validation reports.
 
 ## Validate against a trace
 
@@ -45,19 +42,10 @@ choreoatlas discover   --trace traces/successful-order.trace.json   --out contra
 
 Review the generated files, keep what you need, and iterate on the specs.
 
-## Combined workflow script
+## Reproduce both sample reports
 
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
-
-choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
-
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
-
-choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
+make demo
 ```
 
 ## Exit codes (recap)

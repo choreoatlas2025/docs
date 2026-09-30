@@ -4,24 +4,32 @@
 ChoreoAtlas CLI is currently in **Beta** status. Features and APIs may change as we continue to improve the product.
 :::
 
-This guide shows how to go from trace data to validated reports in minutes. You will discover contracts, lint them, validate against real traces, and review the generated outputs.
+This guide runs the published Community Edition beta against two prerecorded sample traces. It creates one passing report and one expected failure report so you can inspect what the CLI actually checks.
 
 ## Prerequisites
 
-- Docker **or** the ChoreoAtlas CE binary (v0.2.0-ce.beta.1)
+- Docker and Make
 - Git (to clone the quickstart demo)
 - Familiarity with basic shell commands
 
-## Step 0 – Clone the quickstart workspace (recommended)
+## Run the verified sample
 
 ```bash
 git clone https://github.com/choreoatlas2025/quickstart-demo.git
 cd quickstart-demo
+make demo
 ```
 
-The repository includes sample FlowSpec/ServiceSpec files and traces under `contracts/` and `traces/`.
+The repository contains sample FlowSpec/ServiceSpec files and traces under `contracts/` and `traces/`. The command uses the pinned `choreoatlas/cli:0.2.0-ce.beta.1` Docker image and writes two real CLI reports:
 
-## Step 1 – Create a one-line alias
+- `reports/successful-order-report.html`: five flow steps pass in the supplied successful order trace.
+- `reports/failed-payment-report.html`: the supplied failed payment trace fails the gate, as expected.
+
+Open both reports locally. Some input preconditions show `SKIP` because the sample trace lacks those input fields. A passing flow result does not mean every condition was evaluated.
+
+## Inspect the CLI commands
+
+The demo runs `discover` and `validate`. To run a command yourself from inside `quickstart-demo`, create this alias in an interactive shell:
 
 ```bash
 alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace -w /workspace choreoatlas/cli:0.2.0-ce.beta.1'
@@ -29,64 +37,36 @@ alias choreoatlas='docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace
 
 > Prefer installers? Download binaries from [GitHub Releases](https://github.com/choreoatlas2025/cli/releases) instead of using Docker.
 
-## Step 2 – Discover contracts from a trace
+### Discover contracts from a trace
 
 ```bash
 choreoatlas discover   --trace traces/successful-order.trace.json   --out contracts/flows/order-flow.discovered.flowspec.yaml   --out-services contracts/services.discovered
 ```
 
-Expected output (abridged):
-```
-🔍 Analyzing trace data...
-✅ Generated FlowSpec: contracts/flows/order-flow.discovered.flowspec.yaml
-✅ Generated ServiceSpecs under contracts/services.discovered/
-```
+Review the generated files and compare them with the curated sample (`contracts/flows/order-flow.graph.flowspec.yaml`). The current beta's bundled lint schema does not accept every field in this curated graph example, so this guide uses the verified validation path rather than presenting lint as a prerequisite.
 
-Review the generated files and keep either the discovered version or the curated sample (`contracts/flows/order-flow.graph.flowspec.yaml`).
-
-## Step 3 – Lint the FlowSpec
-
-```bash
-choreoatlas lint --flow contracts/flows/order-flow.graph.flowspec.yaml
-```
-
-The linter runs JSON Schema validation (unless `--schema=false`) and structural checks. Successful output looks like:
-```
-[SCHEMA] FlowSpec structure validation passed
-[SCHEMA] ServiceSpec structure validation passed
-Lint: OK
-```
-
-## Step 4 – Validate against a trace
+### Validate against a trace
 
 ```bash
 choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format html --report-out reports/validation-report.html
 ```
 
-Sample console output:
-```
-[PASS] Create Order (orders.createOrder)
-[PASS] Authorize Payment (payment.authorizePayment)
-Report saved: reports/validation-report.html (format: html)
-Validate: OK
-```
-
-Add more formats if needed:
+Add a machine-readable format if needed:
 ```bash
 choreoatlas validate   --flow contracts/flows/order-flow.graph.flowspec.yaml   --trace traces/successful-order.trace.json   --report-format json --report-out reports/validation-report.json
 ```
 
-## Step 5 – Inspect the results
+## Read the results
 
 - `reports/validation-report.html` – timeline, coverage, and gate status
 - Optional `reports/validation-report.json` – structured data for automation
-- Console output – PASS/FAIL for each orchestration step
+- Report details – PASS/FAIL/SKIP for each step and condition
 
 Open the HTML report locally (for example `open reports/validation-report.html` on macOS or `xdg-open` on Linux).
 
 ## Next steps
 
-- **CI Integration:** automate lint + validate + report in your pipelines ([guide/ci-integration](/guide/ci-integration)).
+- **CI Integration:** run the same `make demo` command in a pipeline ([guide/ci-integration](/guide/ci-integration)).
 - **Trace Conversion:** convert Jaeger/OTLP traces into the CE internal format ([guide/trace-conversion](/guide/trace-conversion)).
 
 You are now ready to apply ChoreoAtlas CLI to your own traces or extend the quickstart demo.

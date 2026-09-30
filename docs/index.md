@@ -114,7 +114,7 @@ Expected output
 
 Tips
 - Use the [quickstart demo](https://github.com/choreoatlas2025/quickstart-demo) for a ready-to-run workspace (`git clone … && make demo`).
-- Continue with [Getting Started](/guide/getting-started) for the full discover → lint → validate workflow.
+- Continue with [Getting Started](/guide/getting-started) to generate and inspect both real sample reports.
 
 ## Available Release
 
